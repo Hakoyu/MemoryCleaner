@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\recycling.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Config.ini" />
+    <None Remove="Resources\Info.ico" />
+    <None Remove="Resources\RAMMap.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Config.ini" />
+    <Resource Include="Resources\Info.ico" />
+    <Resource Include="Resources\RAMMap.exe" />
+    <Resource Include="Resources\recycling.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
+  </ItemGroup>
+
+</Project>
