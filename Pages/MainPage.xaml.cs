@@ -23,6 +23,8 @@ using HKW.Management;
 using HKW.FileIni;
 using System.Reflection;
 using System.Windows.Resources;
+using System.Globalization;
+using MemoryCleaner.Langs.Code;
 
 namespace MemoryCleaner.Pages
 {
@@ -32,18 +34,17 @@ namespace MemoryCleaner.Pages
     public partial class MainPage : Page
     {
         public bool autoMinimized = false;
-        FileIni fini = null!;
         Management management = new();
         int taskTime = 0;
         Thread taskTimer = null!;
         int rammapModeCheckedSize = 0;
         double totalMemory = 0;
         DispatcherTimer timerGetMemoryMetrics = new();
-        const string configPath = @"Config.ini";
-        const string rammapPath = @"RAMMap.exe";
-        readonly Uri resourcesConfigUri = new("/Resources/Config.ini", UriKind.Relative);
-        readonly Uri resourcesRAMMapUri = new("/Resources/RAMMap.exe", UriKind.Relative);
-
+        public const string configPath = @"Config.ini";
+        public const string rammapPath = @"RAMMap.exe";
+        public readonly static Uri resourcesConfigUri = new("/Resources/Config.ini", UriKind.Relative);
+        public readonly static Uri resourcesRAMMapUri = new("/Resources/RAMMap.exe", UriKind.Relative);
+        bool isFirst = true;
         public MainPage()
         {
             DateInitialize();
@@ -94,11 +95,6 @@ namespace MemoryCleaner.Pages
         }
         public void StartTask()
         {
-            Button_StartTask_Click(null!, null!);
-        }
-
-        private void Button_StartTask_Click(object sender, RoutedEventArgs e)
-        {
             Button_StartTask.IsEnabled = false;
             Button_StopTask.IsEnabled = true;
             CheckBox_UsedMemoryMore.IsEnabled = false;
@@ -108,6 +104,11 @@ namespace MemoryCleaner.Pages
             TextBox_TaskTimer.IsEnabled = false;
             //if(CheckBox_)
             taskTimer.Start();
+        }
+
+        private void Button_StartTask_Click(object sender, RoutedEventArgs e)
+        {
+            StartTask();
         }
 
         private void Button_StopTask_Click(object sender, RoutedEventArgs e)
@@ -163,6 +164,21 @@ namespace MemoryCleaner.Pages
         {
             Windows.InfoWindow infoWindow = new();
             infoWindow.ShowDialog();
+        }
+        private void ComboBox_I18n_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (isFirst)
+            {
+                isFirst = false;
+                return;
+            }
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo((ComboBox_I18n.SelectedItem as ComboBoxItem)!.ToolTip.ToString()!);
+            if (MessageBox.Show("Are you sure you want to quit?", Code_I18n.Warn, MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+            {
+                Close();
+                System.Windows.Forms.Application.Restart();
+                Application.Current.Shutdown(-1);
+            }
         }
     }
 }

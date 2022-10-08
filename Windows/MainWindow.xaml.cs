@@ -17,6 +17,13 @@ using System.Windows.Shapes;
 using System.IO;
 using Hardcodet.Wpf.TaskbarNotification;
 using System.Drawing;
+using System.Globalization;
+using System.Threading;
+using MemoryCleaner.Langs;
+using MemoryCleaner.Langs.Code;
+using MemoryCleaner.Pages;
+using System.Windows.Threading;
+using HKW.FileIni;
 
 namespace MemoryCleaner
 {
@@ -25,18 +32,61 @@ namespace MemoryCleaner
     /// </summary>
     public partial class MainWindow : Window
     {
-        Pages.MainPage mainPage = new();
+        MainPage mainPage = null!;
         TaskbarIcon tbi = new();
         MenuItem NotifyIcon_Run = new();
         MenuItem NotifyIcon_Show = new();
         MenuItem NotifyIcon_Close = new();
+
         public MainWindow()
         {
+            SetI18n();
             InitializeComponent();
             InterfaceInitialize();
             ButtonInitialize();
             NotifyIconInitialize();
             AutoMinimizedAndStart();
+        }
+        void SetI18n()
+        {
+            if (!File.Exists(MainPage.configPath))
+            {
+                string config;
+                using StreamReader sr = new(Application.GetResourceStream(MainPage.resourcesConfigUri).Stream);
+                config = sr.ReadToEnd();
+                using StreamWriter sw = File.AppendText(MainPage.configPath);
+                sw.Write(config);
+                sw.Close();
+                FileIni fini = new(MainPage.configPath);
+                fini["Extras"]!["Lang"].Replace(Thread.CurrentThread.CurrentUICulture.Name);
+                fini.Save();
+                fini.Close();
+            }
+            else
+            {
+                try
+                {
+                    FileIni fini = new(MainPage.configPath);
+                    Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(fini["Extras"]!["Lang"].First());
+                    fini.Close();
+                }
+                catch
+                {
+                    MessageBox.Show("Settings loading error\nWill restore default settings and restart the application");
+                    File.Delete(MainPage.configPath);
+                    System.Windows.Forms.Application.Restart();
+                    Application.Current.Shutdown(-1);
+                }
+            }
+            mainPage = new();
+            foreach (ComboBoxItem item in mainPage.ComboBox_I18n.Items)
+            {
+                if (item.ToolTip.ToString() == Thread.CurrentThread.CurrentUICulture.Name)
+                {
+                    mainPage.ComboBox_I18n.SelectedItem = item;
+                    break;
+                }
+            }
         }
         void AutoMinimizedAndStart()
         {
@@ -76,7 +126,7 @@ namespace MemoryCleaner
             tbi.ContextMenu = contextMenu;
         }
         //窗体移动
-        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Grid_TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
         }
@@ -101,10 +151,9 @@ namespace MemoryCleaner
         //关闭
         private void Button_TitleClose_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to quit?", "Warn", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Are you sure you want to quit?", Code_I18n.Warn, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 CloseProgram();
         }
-
         private void CloseProgram()
         {
             mainPage.Close();

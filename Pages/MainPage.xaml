@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:I18n="clr-namespace:MemoryCleaner.Langs.Display"
       xmlns:local="clr-namespace:MemoryCleaner"
       mc:Ignorable="d" 
       d:DesignHeight="420" d:DesignWidth="700"
@@ -10,12 +11,12 @@
     <Grid Background="White" MouseDown="Grid_MouseDown">
         <GroupBox Header="MemoryMetrics" Margin="10,10,0,0" Width="400" Height="150" BorderBrush="#FFD5DFE5" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Grid>
-                <Label x:Name="LabelTotalSystemMemory" Content="Total system memory:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="180" Height="30" VerticalContentAlignment="Center" FontSize="16"/>
+                <Label x:Name="Label_TotalSystemMemory" Content="{x:Static I18n:Display_I18n.TotalSystemMemory}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="180" Height="30" VerticalContentAlignment="Center" FontSize="16"/>
                 <TextBox x:Name="TextBox_TotalMemory" HorizontalAlignment="Left" Margin="220,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" Height="30" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16" IsReadOnly="True" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False"/>
-                <Label x:Name="LabelFreeMemory" Content="Free memory:" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="180" Height="30" VerticalContentAlignment="Center" FontSize="16"/>
+                <Label x:Name="Label_FreeMemory" Content="Free memory:" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="180" Height="30" VerticalContentAlignment="Center" FontSize="16"/>
                 <TextBox x:Name="TextBox_FreeMemory" Margin="220,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" HorizontalAlignment="Left" Width="60" FontSize="16" IsReadOnly="True" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" TextChanged="TextBox_FreeMemory_TextChanged"/>
                 <TextBox x:Name="TextBox_UsedMemory" HorizontalAlignment="Left" Height="30" Margin="220,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16" IsReadOnly="True" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" TextChanged="TextBox_UsedMemory_TextChanged"/>
-                <Label x:Name="LabelUsedMemory" Content="Used memory:" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="180" Height="30" FontSize="16"/>
+                <Label x:Name="Label_UsedMemory" Content="Used memory:" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="180" Height="30" FontSize="16"/>
                 <ProgressBar x:Name="Progressbar_MemoryMetrics" Margin="0,10,10,10" Width="40" HorizontalAlignment="Right" Maximum="4096" Orientation="Vertical" Value="1024"/>
                 <Label x:Name="Label_MemoryMetrics" Content="0%" HorizontalAlignment="Right" Margin="0,10,10,10" VerticalAlignment="Stretch" Width="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                 <Label Content="MB" HorizontalAlignment="Left" Margin="280,10,0,0" VerticalAlignment="Top" Width="40" Height="30" VerticalContentAlignment="Center" FontSize="16"/>
@@ -57,5 +58,9 @@
         <Label x:Name="Label_TaskProgressInfo" Content="No current tasks" Margin="0,310,10,0" VerticalAlignment="Top" Height="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Width="270" FontSize="16"/>
         <Button x:Name="Button_Help" Content="❓" HorizontalAlignment="Right" Margin="0,370,10,0" VerticalAlignment="Top" Width="40" Height="40" FontSize="24"/>
         <Button x:Name="Button_Info" Content="❗" HorizontalAlignment="Right" Margin="0,370,70,0" VerticalAlignment="Top" Width="40" Height="40" FontSize="24" Click="Button_Info_Click"/>
+        <ComboBox x:Name="ComboBox_I18n" HorizontalAlignment="Left" Margin="420,375,0,0" VerticalAlignment="Top" Width="120" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,3,0,3" FontSize="16" SelectionChanged="ComboBox_I18n_SelectionChanged">
+            <ComboBoxItem x:Name="Button_I18nEnglish" Content="English" ToolTip="en-US" />
+            <ComboBoxItem x:Name="Button_I18nChinese" Content="简体中文" ToolTip="zh-CN" />
+        </ComboBox>
     </Grid>
 </Page>

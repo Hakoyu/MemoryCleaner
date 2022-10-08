@@ -42,6 +42,7 @@ namespace MemoryCleaner.Pages
             }
             else
             {
+                FileIni fini = new(configPath);
                 try
                 {
                     string temp = "";
@@ -79,6 +80,7 @@ namespace MemoryCleaner.Pages
                     System.Windows.Forms.Application.Restart();
                     Application.Current.Shutdown(-1);
                 }
+                fini.Close();
             }
             if (!File.Exists(rammapPath))
             {
@@ -109,6 +111,7 @@ namespace MemoryCleaner.Pages
         }
         void ConfigSave()
         {
+            FileIni fini = new(configPath);
             fini["RammapMode"]!["EmptyWorkingSets"].Replace(CheckBox_EmptyWorkingSets.IsChecked.ToString()!);
             fini["RammapMode"]!["EmptySystemWorkingSets"].Replace(CheckBox_EmptySystemWorkingSets.IsChecked.ToString()!);
             fini["RammapMode"]!["EmptyModifiedPageList"].Replace(CheckBox_EmptyModifiedPageList.IsChecked.ToString()!);
@@ -123,8 +126,10 @@ namespace MemoryCleaner.Pages
 
             fini["Extras"]!["AutoMinimized"].Replace(CheckBox_AutoMinimizedAndStart.IsChecked.ToString()!);
             fini["Extras"]!["AutoStartOnUserLogon"].Replace(CheckBox_LanuchOnUserLogon.IsChecked.ToString()!);
+            fini["Extras"]!["Lang"].Replace((ComboBox_I18n.SelectedItem as ComboBoxItem)!.ToolTip.ToString()!);
 
             fini.Save();
+            fini.Close();
         }
         void DateInitialize()
         {
@@ -196,8 +201,8 @@ namespace MemoryCleaner.Pages
             {
                 for (int i = (int)Dispatcher.Invoke(() => Progressbar_TaskProgress.Maximum); i >= 0; i--)
                 {
-                    Dispatcher.Invoke(() => Progressbar_TaskProgress.Value += 10);
-                    Thread.Sleep(1000);
+                    Dispatcher.Invoke(() => Progressbar_TaskProgress.Value += 1);
+                    Thread.Sleep(100);
                 }
             }).Start();
             if (Dispatcher.Invoke(Checked, CheckBox_EmptyWorkingSets) is true)
