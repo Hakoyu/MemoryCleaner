@@ -1,0 +1,21 @@
+﻿<Page x:Class="MemoryCleaner.Pages.ResidualMode"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MemoryCleaner.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="120" d:DesignWidth="388"
+      Title="ResidualControl">
+    <Grid Background="White">
+        <CheckBox x:Name="CheckBox_UsedMemoryMore" Content="Used memory more than:" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="30" FontSize="16" VerticalContentAlignment="Center" Padding="4,0,0,0"/>
+        <TextBox x:Name="TextBox_UsedMemoryMoreSize" InputMethod.IsInputMethodEnabled="False" Margin="250,5,0,0" TextWrapping="Wrap" Text="8192" VerticalAlignment="Top" Height="30" VerticalContentAlignment="Center" FontSize="16" PreviewTextInput="TextBox_NumberInput" HorizontalAlignment="Left" Width="80" KeyDown="TextBox_MemoryMoreSize_KeyDown" LostKeyboardFocus="TextBox_MemorySizeChange_LostKeyboardFocus" HorizontalContentAlignment="Center"/>
+        <Label Content="MB" Margin="340,5,0,0" VerticalAlignment="Top" FontSize="16" Height="30" HorizontalAlignment="Left" Width="40"/>
+        <CheckBox x:Name="CheckBox_FreeMemoryLower" Content="Free memory lower than:" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" Height="30" FontSize="16" VerticalContentAlignment="Center" IsChecked="True" Padding="4,0,0,0"/>
+        <TextBox x:Name="TextBox_FreeMemoryLowerSize" InputMethod.IsInputMethodEnabled="False" Margin="250,45,0,0" TextWrapping="Wrap" Text="4096" VerticalAlignment="Top" Height="30" HorizontalAlignment="Left" Width="80" VerticalContentAlignment="Center" FontSize="16" PreviewTextInput="TextBox_NumberInput" KeyDown="TextBox_MemoryMoreSize_KeyDown" LostKeyboardFocus="TextBox_MemorySizeChange_LostKeyboardFocus" HorizontalContentAlignment="Center"/>
+        <Label Content="MB" Margin="340,45,0,0" VerticalAlignment="Top" FontSize="16" Height="30" HorizontalAlignment="Left" Width="40"/>
+        <Label x:Name="CheckBox_MinimumInterval" Content="Minimum operating interval:" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" Height="30" FontSize="16" VerticalContentAlignment="Center" Padding="0,0,0,0"/>
+        <TextBox x:Name="TextBox_IntervalTime" InputMethod.IsInputMethodEnabled="False" HorizontalAlignment="Left" Margin="250,85,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="80" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" PreviewTextInput="TextBox_NumberInput" KeyDown="TextBox_MinimumIntervalSize_KeyDown" LostKeyboardFocus="TextBox_MinimumIntervalSize_LostKeyboardFocus"/>
+        <Label Content="min" HorizontalAlignment="Left" Margin="338,84,0,0" VerticalAlignment="Top" Height="30" Width="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16"/>
+    </Grid>
+</Page>

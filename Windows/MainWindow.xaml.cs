@@ -57,10 +57,9 @@ namespace MemoryCleaner
                 using StreamWriter sw = File.AppendText(MainPage.configPath);
                 sw.Write(config);
                 sw.Close();
-                FileIni fini = new(MainPage.configPath);
+                using FileIni fini = new(MainPage.configPath);
                 fini["Extras"]!["Lang"].Replace(Thread.CurrentThread.CurrentUICulture.Name);
                 fini.Save();
-                fini.Close();
             }
             else
             {
@@ -98,7 +97,7 @@ namespace MemoryCleaner
         }
         void InterfaceInitialize()
         {
-            Windows_MainFrame.Content = mainPage;
+            Frame_MainWindows.Content = mainPage;
             if (mainPage.autoMinimized == true)
                 Button_TitleMin_Click(null!, null!);
         }
@@ -106,13 +105,13 @@ namespace MemoryCleaner
         {
             NotifyIcon_Run.Header = "Run";
             NotifyIcon_Run.Icon = "♻";
-            NotifyIcon_Run.Click += (o, e) => { mainPage.ExecuteNow(); };
+            NotifyIcon_Run.Click += (o, e) => mainPage.ExecuteNow();
             NotifyIcon_Show.Header = "Show";
             NotifyIcon_Show.Icon = "🔲";
-            NotifyIcon_Show.Click += (o, e) => { Visibility = Visibility.Visible; };
+            NotifyIcon_Show.Click += (o, e) => Visibility = Visibility.Visible;
             NotifyIcon_Close.Header = "Close";
             NotifyIcon_Close.Icon = "❌";
-            NotifyIcon_Close.Click += (o, e) => { CloseProgram(); };
+            NotifyIcon_Close.Click += (o, e) => CloseProgram();
         }
         void NotifyIconInitialize()
         {

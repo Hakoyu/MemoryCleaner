@@ -24,7 +24,7 @@
                 <Label Content="MB" HorizontalAlignment="Left" Margin="280,90,0,0" VerticalAlignment="Top" Width="40" Height="30" VerticalContentAlignment="Center" FontSize="16"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="RammapMode" Margin="0,10,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="290" Width="270">
+        <GroupBox x:Name="GroupBox_RammapMode" Header="RammapMode" Margin="0,10,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="290" Width="270">
             <Grid>
                 <CheckBox x:Name="CheckBox_EmptyWorkingSets" Content="Empty working sets" HorizontalAlignment="Stretch" Margin="10,10,10,0" VerticalAlignment="Top" FontSize="16" VerticalContentAlignment="Center" Height="30" IsChecked="True" Click="RammapModeStateChanges"/>
                 <CheckBox x:Name="CheckBox_EmptySystemWorkingSets" Content="Empty system working sets" HorizontalAlignment="Stretch" Margin="10,50,10,0" VerticalAlignment="Top" FontSize="16" VerticalContentAlignment="Center" Height="30" Click="RammapModeStateChanges"/>
@@ -36,24 +36,16 @@
         </GroupBox>
         <GroupBox Header="ProgramTasks" Margin="10,170,0,0" Height="190" Width="400" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Grid>
-                <CheckBox x:Name="CheckBox_UsedMemoryMore" Content="Used memory more than:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="230" Height="30" FontSize="16" VerticalContentAlignment="Center"/>
-                <TextBox x:Name="TextBox_UsedMemoryMoreSize" InputMethod.IsInputMethodEnabled="False" Margin="250,10,0,0" TextWrapping="Wrap" Text="8192" VerticalAlignment="Top" Height="30" VerticalContentAlignment="Center" FontSize="16" PreviewTextInput="TextBox_NumberInput" HorizontalAlignment="Left" Width="80" KeyDown="TextBox_MemoryMoreSize_KeyDown" LostKeyboardFocus="TextBox_MemorySizeChange_LostKeyboardFocus"/>
-                <Label Content="MB" Margin="340,10,0,0" VerticalAlignment="Top" FontSize="16" Height="30" HorizontalAlignment="Left" Width="40"/>
-                <Button x:Name="Button_StopTask" Content="Stop" Margin="0,90,78,0" VerticalAlignment="Top" Height="30" FontSize="16" IsEnabled="False" Click="Button_StopTask_Click" HorizontalAlignment="Right" Width="60"/>
-                <Button x:Name="Button_StartTask" Content="Start" HorizontalAlignment="Right" Margin="0,90,10,0" VerticalAlignment="Top" Width="60" Height="30" FontSize="16" HorizontalContentAlignment="Center" Click="Button_StartTask_Click"/>
-                <CheckBox x:Name="CheckBox_FreeMemoryLower" Content="Free memory lower than:" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="230" Height="30" FontSize="16" VerticalContentAlignment="Center" IsChecked="True"/>
-                <TextBox x:Name="TextBox_FreeMemoryLowerSize" InputMethod.IsInputMethodEnabled="False" Margin="250,50,0,0" TextWrapping="Wrap" Text="4096" VerticalAlignment="Top" Height="30" HorizontalAlignment="Left" Width="80" VerticalContentAlignment="Center" FontSize="16" PreviewTextInput="TextBox_NumberInput" KeyDown="TextBox_MemoryMoreSize_KeyDown" LostKeyboardFocus="TextBox_MemorySizeChange_LostKeyboardFocus"/>
-                <Label Content="MB" Margin="340,50,0,0" VerticalAlignment="Top" FontSize="16" Height="30" HorizontalAlignment="Left" Width="40"/>
-                <TextBox x:Name="TextBox_TaskTimer" InputMethod.IsInputMethodEnabled="False" HorizontalAlignment="Left" Margin="175,90,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="30" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" PreviewTextInput="TextBox_NumberInput" KeyDown="TextBox_MinimumIntervalSize_KeyDown" LostKeyboardFocus="TextBox_MinimumIntervalSize_LostKeyboardFocus"/>
-                <Label Content="min" HorizontalAlignment="Left" Margin="208,90,0,0" VerticalAlignment="Top" Height="30" Width="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16"/>
-                <ProgressBar x:Name="ProgresBar_TimeLeft" Height="30" Margin="150,130,10,0" VerticalAlignment="Top"/>
-                <Label x:Name="Label_TimeLeft" Content="00:00" Margin="150,130,10,0" VerticalAlignment="Top" Height="30" FontSize="16" HorizontalContentAlignment="Center"/>
-                <Label Content="Next execution:" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Height="30" Width="130" FontSize="16"/>
-                <CheckBox x:Name="CheckBox_MinimumInterval" Content="Minimum interval" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="160" Height="30" FontSize="16" VerticalContentAlignment="Center"/>
+                <Frame x:Name="Frame_ModeSwitch" Margin="0,0,0,50" Height="120" NavigationUIVisibility="Hidden"/>
+                
+                <Button x:Name="Button_ModeSwitch" Content="Switch" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Height="30" Width="60" FontSize="16" Click="Button_ModeSwitch_Click"/>
+                <Label x:Name="Label_ModeSwitch" Content="Residual Mode" HorizontalAlignment="Left" Margin="80,0,0,10" VerticalAlignment="Bottom" Height="30" Width="120" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Padding="0,0,0,0"/>
+                <Button x:Name="Button_StopTask" Content="Stop" Margin="0,0,100,10" VerticalAlignment="Bottom" Height="30" FontSize="16" IsEnabled="False" Click="Button_StopTask_Click" HorizontalAlignment="Right" Width="80"/>
+                <Button x:Name="Button_StartTask" Content="Start" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="80" Height="30" FontSize="16" HorizontalContentAlignment="Center" Click="Button_StartTask_Click"/>
             </Grid>
         </GroupBox>
-        <CheckBox x:Name="CheckBox_AutoMinimizedAndStart" Content="Auto-minimize and start" HorizontalAlignment="Left" Margin="10,370,0,0" VerticalAlignment="Top" Width="360" Height="20" VerticalContentAlignment="Center"/>
-        <CheckBox x:Name="CheckBox_LanuchOnUserLogon" Content="Lanuch on user logon" HorizontalAlignment="Left" Margin="10,390,0,0" VerticalAlignment="Top" Width="360" Height="20" VerticalContentAlignment="Center" Click="CheckBox_LanuchOnUserLogon_Click"/>
+        <CheckBox x:Name="CheckBox_AutoMinimizedAndStart" Content="Auto-minimize and start" HorizontalAlignment="Left" Margin="10,370,0,0" VerticalAlignment="Top" Height="20" VerticalContentAlignment="Center"/>
+        <CheckBox x:Name="CheckBox_LanuchOnUserLogon" Content="Lanuch on user logon" HorizontalAlignment="Left" Margin="10,390,0,0" VerticalAlignment="Top" Height="20" VerticalContentAlignment="Center" Click="CheckBox_LanuchOnUserLogon_Click"/>
         <ProgressBar x:Name="Progressbar_TaskProgress" HorizontalAlignment="Right" Height="50" Margin="0,310,10,0" VerticalAlignment="Top" Width="270" Maximum="5"/>
         <Label x:Name="Label_TaskProgressInfo" Content="No current tasks" Margin="0,310,10,0" VerticalAlignment="Top" Height="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Width="270" FontSize="16"/>
         <Button x:Name="Button_Help" Content="❓" HorizontalAlignment="Right" Margin="0,370,10,0" VerticalAlignment="Top" Width="40" Height="40" FontSize="24"/>

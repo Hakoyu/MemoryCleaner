@@ -34,9 +34,8 @@ namespace MemoryCleaner.Pages
         {
             if (!File.Exists(configPath))
             {
-                string config = "";
                 using StreamReader sr = new(Application.GetResourceStream(resourcesConfigUri).Stream);
-                config = sr.ReadToEnd();
+                string config = sr.ReadToEnd();
                 using StreamWriter sw = File.AppendText(configPath);
                 sw.Write(config);
             }
@@ -45,7 +44,6 @@ namespace MemoryCleaner.Pages
                 FileIni fini = new(configPath);
                 try
                 {
-                    string temp = "";
                     fini = new(configPath);
 
                     CheckBox_EmptyWorkingSets.IsChecked = bool.Parse(fini["RammapMode"]!["EmptyWorkingSets"].First());
@@ -54,20 +52,28 @@ namespace MemoryCleaner.Pages
                     CheckBox_EmptyStandbyList.IsChecked = bool.Parse(fini["RammapMode"]!["EmptyStandbyList"].First());
                     CheckBox_EmptyPrioity0StandbyList.IsChecked = bool.Parse(fini["RammapMode"]!["EmptyPrioity0StandbyList"].First());
 
-                    CheckBox_UsedMemoryMore.IsChecked = bool.Parse(fini["ProgramTasks"]!["UsedMemoryMore"].First());
-                    temp = fini["ProgramTasks"]!["UsedMemoryMoreSize"].First();
-                    if (temp.All(c => char.IsNumber(c)))
-                        TextBox_UsedMemoryMoreSize.Text = temp;
-                    MemorySizeSave(TextBox_UsedMemoryMoreSize);
-                    CheckBox_FreeMemoryLower.IsChecked = bool.Parse(fini["ProgramTasks"]!["FreeMemoryLower"].First());
-                    temp = fini["ProgramTasks"]!["FreeMemoryLowerSize"].First();
-                    if (temp.All(c => char.IsNumber(c)))
-                        TextBox_FreeMemoryLowerSize.Text = temp;
-                    MemorySizeSave(TextBox_FreeMemoryLowerSize);
-                    temp = fini["ProgramTasks"]!["TaskTimer"].First();
-                    if (temp.All(c => char.IsNumber(c)))
-                        TextBox_TaskTimer.Text = temp;
-                    MinimumIntervalSizeSave(TextBox_TaskTimer);
+                    while (currentMode != null)
+                    {
+                        if (currentMode.Value.GetType().Name == fini["TaskMode"]!["Mode"].First())
+                        {
+                            Frame_ModeSwitch.Content = currentMode.Value;
+                            Label_ModeSwitch.Content = fini["TaskMode"]!["Mode"].First();
+                            break;
+                        }
+                        currentMode = currentMode.Next!;
+                    }
+
+                    residualMode.CheckBox_UsedMemoryMore.IsChecked = bool.Parse(fini["ResidualMode"]!["UsedMemoryMore"].First());
+                    residualMode.TextBox_UsedMemoryMoreSize.Text =
+                        PageFun.MemorySizeParse(int.Parse(fini["ResidualMode"]!["UsedMemoryMoreSize"].First())).ToString();
+                    residualMode.CheckBox_FreeMemoryLower.IsChecked = bool.Parse(fini["ResidualMode"]!["FreeMemoryLower"].First());
+                    residualMode.TextBox_FreeMemoryLowerSize.Text =
+                        PageFun.MemorySizeParse(int.Parse(fini["ResidualMode"]!["FreeMemoryLowerSize"].First())).ToString();
+                    residualMode.TextBox_IntervalTime.Text =
+                        PageFun.IntervalTimeParse(int.Parse(fini["ResidualMode"]!["IntervalTime"].First())).ToString();
+
+                    timeMode.TextBox_IntervalTime.Text =
+                        PageFun.IntervalTimeParse(int.Parse(fini["TimeMode"]!["IntervalTime"].First())).ToString();
 
                     CheckBox_AutoMinimizedAndStart.IsChecked = bool.Parse(fini["Extras"]!["AutoMinimized"].First());
                     autoMinimized = bool.Parse(fini["Extras"]!["AutoMinimized"].First());
@@ -93,16 +99,9 @@ namespace MemoryCleaner.Pages
         }
         void GetRammapModeCheckedSize()
         {
-            if (CheckBox_EmptyWorkingSets.IsChecked == true)
-                rammapModeCheckedSize += 1;
-            if (CheckBox_EmptySystemWorkingSets.IsChecked == true)
-                rammapModeCheckedSize += 1;
-            if (CheckBox_EmptyModifiedPageList.IsChecked == true)
-                rammapModeCheckedSize += 1;
-            if (CheckBox_EmptyStandbyList.IsChecked == true)
-                rammapModeCheckedSize += 1;
-            if (CheckBox_EmptyPrioity0StandbyList.IsChecked == true)
-                rammapModeCheckedSize += 1;
+            foreach (var cb in rammapMode.Values)
+                if (((CheckBox)cb).IsChecked is true)
+                    rammapModeCheckedSize += 1;
         }
         public void Close()
         {
@@ -111,37 +110,34 @@ namespace MemoryCleaner.Pages
         }
         void ConfigSave()
         {
-            FileIni fini = new(configPath);
+            using FileIni fini = new(configPath);
             fini["RammapMode"]!["EmptyWorkingSets"].Replace(CheckBox_EmptyWorkingSets.IsChecked.ToString()!);
             fini["RammapMode"]!["EmptySystemWorkingSets"].Replace(CheckBox_EmptySystemWorkingSets.IsChecked.ToString()!);
             fini["RammapMode"]!["EmptyModifiedPageList"].Replace(CheckBox_EmptyModifiedPageList.IsChecked.ToString()!);
             fini["RammapMode"]!["EmptyStandbyList"].Replace(CheckBox_EmptyStandbyList.IsChecked.ToString()!);
             fini["RammapMode"]!["EmptyPrioity0StandbyList"].Replace(CheckBox_EmptyPrioity0StandbyList.IsChecked.ToString()!);
 
-            fini["ProgramTasks"]!["UsedMemoryMore"].Replace(CheckBox_UsedMemoryMore.IsChecked.ToString()!);
-            fini["ProgramTasks"]!["UsedMemoryMoreSize"].Replace(TextBox_UsedMemoryMoreSize.Text);
-            fini["ProgramTasks"]!["FreeMemoryLower"].Replace(CheckBox_FreeMemoryLower.IsChecked.ToString()!);
-            fini["ProgramTasks"]!["FreeMemoryLowerSize"].Replace(TextBox_FreeMemoryLowerSize.Text);
-            fini["ProgramTasks"]!["TaskTimer"].Replace(TextBox_TaskTimer.Text);
+            fini["TaskMode"]!["Mode"].Replace(currentMode.Value.GetType().Name);
+
+            fini["ResidualMode"]!["UsedMemoryMore"].Replace(residualMode.CheckBox_UsedMemoryMore.IsChecked.ToString()!);
+            fini["ResidualMode"]!["UsedMemoryMoreSize"].Replace(residualMode.TextBox_UsedMemoryMoreSize.Text);
+            fini["ResidualMode"]!["FreeMemoryLower"].Replace(residualMode.CheckBox_FreeMemoryLower.IsChecked.ToString()!);
+            fini["ResidualMode"]!["FreeMemoryLowerSize"].Replace(residualMode.TextBox_FreeMemoryLowerSize.Text);
+            fini["ResidualMode"]!["IntervalTime"].Replace(residualMode.TextBox_IntervalTime.Text);
+
+            fini["TimeMode"]!["IntervalTime"].Replace(timeMode.TextBox_IntervalTime.Text);
 
             fini["Extras"]!["AutoMinimized"].Replace(CheckBox_AutoMinimizedAndStart.IsChecked.ToString()!);
             fini["Extras"]!["AutoStartOnUserLogon"].Replace(CheckBox_LanuchOnUserLogon.IsChecked.ToString()!);
             fini["Extras"]!["Lang"].Replace((ComboBox_I18n.SelectedItem as ComboBoxItem)!.ToolTip.ToString()!);
-
-            fini.Save();
-            fini.Close();
-        }
-        void DateInitialize()
-        {
-            if (management.GetMemoryMetrics() is MemoryMetrics mm)
-                totalMemory = mm.Total;
         }
         void InterfaceInitialize()
         {
-            Progressbar_MemoryMetrics.Maximum = totalMemory;
-            TextBox_TotalMemory.Text = totalMemory.ToString();
+            Progressbar_MemoryMetrics.Maximum = PageFun.totalMemory;
+            TextBox_TotalMemory.Text = PageFun.totalMemory.ToString();
             SetTimerGetMemoryMetrics();
-            taskTimer = new Thread(() => TaskTimer(taskTime));
+            residualTask = new Thread(ResidualTaskTimer);
+            timeTask = new Thread(TimeTaskTimer);
             rammpRun = new Thread(RammpRun);
         }
         void SetTimerGetMemoryMetrics()
@@ -162,12 +158,6 @@ namespace MemoryCleaner.Pages
         {
             if (!rammpRun.IsAlive)
             {
-                Button_ExecuteNow.IsEnabled = false;
-                CheckBox_EmptyWorkingSets.IsEnabled = false;
-                CheckBox_EmptySystemWorkingSets.IsEnabled = false;
-                CheckBox_EmptyModifiedPageList.IsEnabled = false;
-                CheckBox_EmptyStandbyList.IsEnabled = false;
-                CheckBox_EmptyPrioity0StandbyList.IsEnabled = false;
                 Progressbar_TaskProgress.Maximum = rammapModeCheckedSize * 30;
                 rammpRun = new Thread(RammpRun);
                 rammpRun.Start();
@@ -175,28 +165,18 @@ namespace MemoryCleaner.Pages
         }
         void TaskRammpRun()
         {
-            if (!taskTimer.IsAlive)
+            if (!residualTask.IsAlive)
             {
-                taskTimer = new Thread(() => TaskTimer(taskTime));
-                taskTimer.Start();
+                residualTask = new Thread(ResidualTaskTimer);
+                residualTask.Start();
                 if (!rammpRun.IsAlive)
                     ExecuteNow();
             }
         }
-        bool Checked(CheckBox? checkBox)
-        {
-            if (checkBox?.IsChecked is true)
-                return true;
-            return false;
-        }
-        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
-        void ThreadSleepOfMinutes(int minutes)
-        {
-            Thread.Sleep(minutes * 60 * 1000);
-        }
         [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         void RammpRun()
         {
+            Dispatcher.Invoke(() => GroupBox_RammapMode.IsEnabled = false);
             new Thread(() =>
             {
                 for (int i = (int)Dispatcher.Invoke(() => Progressbar_TaskProgress.Maximum); i >= 0; i--)
@@ -205,31 +185,16 @@ namespace MemoryCleaner.Pages
                     Thread.Sleep(100);
                 }
             }).Start();
-            if (Dispatcher.Invoke(Checked, CheckBox_EmptyWorkingSets) is true)
-                RammapRunnerRun(RammapMode.EmptyWorkingSets);
-            if (Dispatcher.Invoke(Checked, CheckBox_EmptySystemWorkingSets) is true)
-                RammapRunnerRun(RammapMode.EmptySystemWorkingSets);
-            if (Dispatcher.Invoke(Checked, CheckBox_EmptyModifiedPageList) is true)
-                RammapRunnerRun(RammapMode.EmptyModifiedPageList);
-            if (Dispatcher.Invoke(Checked, CheckBox_EmptyStandbyList) is true)
-                RammapRunnerRun(RammapMode.EmptyStandbyList);
-            if (Dispatcher.Invoke(Checked, CheckBox_EmptyPrioity0StandbyList) is true)
-                RammapRunnerRun(RammapMode.EmptyPrioity0StandbyList);
-            Dispatcher.Invoke(() =>
-            {
-                Label_TaskProgressInfo.Content = "Success";
-            });
+            foreach (var mode in rammapMode)
+                if (Dispatcher.Invoke(() => ((CheckBox)mode.Value).IsChecked is true))
+                    RammapRunnerRun(mode.Key);
+            Dispatcher.Invoke(() => Label_TaskProgressInfo.Content = "Success");
             Thread.Sleep(3000);
             Dispatcher.Invoke(() =>
             {
                 Progressbar_TaskProgress.Value = 0;
                 Label_TaskProgressInfo.Content = "No current tasks";
-                Button_ExecuteNow.IsEnabled = true;
-                CheckBox_EmptyWorkingSets.IsEnabled = true;
-                CheckBox_EmptySystemWorkingSets.IsEnabled = true;
-                CheckBox_EmptyModifiedPageList.IsEnabled = true;
-                CheckBox_EmptyStandbyList.IsEnabled = true;
-                CheckBox_EmptyPrioity0StandbyList.IsEnabled = true;
+                GroupBox_RammapMode.IsEnabled = true;
             });
             void RammapRunnerRun(RammapMode mode)
             {
@@ -238,61 +203,68 @@ namespace MemoryCleaner.Pages
                 Thread.Sleep(3000);
             }
         }
-        void MemorySizeSave(TextBox textBox)
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
+        void ResidualTaskTimer()
         {
-            if (!Regex.IsMatch(textBox.Text, "^[0-9]+$"))
-            {
-                MessageBox.Show("Only numeric input");
-                textBox.Text = "1024";
-                return;
-            }
-            int size = int.Parse(textBox.Text);
-            if (size < 1024)
-            {
-                MessageBox.Show("Minimum value is 1024");
-                textBox.Text = "1024";
-            }
-            else if (size > (int)totalMemory / 2)
-            {
-                MessageBox.Show("The maximum value cannot exceed half of the current memory maximum");
-                textBox.Text = ((int)totalMemory / 2).ToString();
-            }
-        }
-        void MinimumIntervalSizeSave(TextBox textBox)
-        {
-            if (!Regex.IsMatch(textBox.Text, "^[0-9]+$"))
-            {
-                MessageBox.Show("Only numeric input");
-                textBox.Text = "10";
-                return;
-            }
-            if (textBox.Text.Length != 2)
-            {
-                textBox.Text = "10";
-                MessageBox.Show("The value range is 10~99");
-            }
-            taskTime = int.Parse(textBox.Text);
-            ProgresBar_TimeLeft.Value = 0;
-            ProgresBar_TimeLeft.Maximum = taskTime * 60;
-            if (taskTimer != null && taskTimer.ThreadState != ThreadState.Unstarted)
-                taskTimer.Join(1);
-            taskTimer = new Thread(() => TaskTimer(taskTime));
+            for (int i = int.Parse(Dispatcher.Invoke(() => residualMode.TextBox_IntervalTime.Text)) * 60; i > 0 && residualTask.ThreadState != ThreadState.Unstarted; i--)
+                Thread.Sleep(1000);
         }
         [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
-        void TaskTimer(int min)
+        void TimeTaskTimer()
         {
-            if (min > 0)
+            int min = int.Parse(Dispatcher.Invoke(() => timeMode.TextBox_IntervalTime.Text));
+            Dispatcher.Invoke(() => timeMode.ProgresBar_TimeLeft.Maximum = min * 60);
+            DateTime dt = new(0001, 01, 01, 00, 00, 00);
+            dt = dt.AddMinutes(min);
+            for (int i = 0; i < min * 60 && timeTask.ThreadState != ThreadState.Unstarted; i++)
             {
-                DateTime dt = new(0001, 01, 01, 00, min, 00);
-                for (int i = 0; i < min * 60; i++)
+                Dispatcher.Invoke(() =>
                 {
-                    Dispatcher.BeginInvoke(() =>
-                    {
-                        ProgresBar_TimeLeft.Value = i;
-                        Label_TimeLeft.Content = dt.AddSeconds(-i).ToString("mm:ss");
-                    });
-                    Thread.Sleep(1000);
-                }
+                    timeMode.ProgresBar_TimeLeft.Value = i;
+                    timeMode.Label_TimeLeft.Content = dt.AddSeconds(-i).ToString("HH:mm:ss");
+                });
+                Thread.Sleep(1000);
+            }
+        }
+        public void StartTask()
+        {
+            Button_StartTask.IsEnabled = false;
+            Button_StopTask.IsEnabled = true;
+            Button_ModeSwitch.IsEnabled = false;
+            if (Frame_ModeSwitch.Content is ResidualMode)
+            {
+                residualMode.IsEnabled = false;
+                residualTask.Start();
+            }
+            else if (Frame_ModeSwitch.Content is TimeMode)
+            {
+                timeMode.TextBox_IntervalTime.IsEnabled = false;
+                timeTask.Start();
+            }
+        }
+        public void StopTask()
+        {
+            Button_StopTask.IsEnabled = false;
+            Button_StartTask.IsEnabled = true;
+            Button_ModeSwitch.IsEnabled = true;
+            if (Frame_ModeSwitch.Content is ResidualMode)
+            {
+                residualMode.IsEnabled = true;
+                if (residualTask.ThreadState != ThreadState.Unstarted)
+                    residualTask.Join(1);
+                residualTask = new Thread(ResidualTaskTimer);
+            }
+            else if (Frame_ModeSwitch.Content is TimeMode)
+            {
+                timeMode.TextBox_IntervalTime.IsEnabled = true;
+                if (timeTask.ThreadState != ThreadState.Unstarted)
+                    timeTask.Join(1);
+                timeTask = new Thread(TimeTaskTimer);
+                Dispatcher.Invoke(() =>
+                {
+                    timeMode.Label_TimeLeft.Content = "00:00:00";
+                    timeMode.ProgresBar_TimeLeft.Value = 0;
+                });
             }
         }
     }

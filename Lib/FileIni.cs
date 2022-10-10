@@ -197,7 +197,12 @@ namespace HKW.FileIni
         /// <summary>关闭文件</summary>
         public void Close() => Dispose(true);
         /// <summary>清空资源</summary>
-        public void Dispose() => Dispose(true);
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+            Dispose(true);
+        }
+
         /// <summary>清空资源</summary>
         protected virtual void Dispose(bool disposing)
         {
@@ -415,16 +420,14 @@ namespace HKW.FileIni
         /// <summary>保存数据</summary>
         public void Save()
         {
-            using (StreamWriter sw = new(filePath, false))
+            using StreamWriter sw = new(filePath, false);
+            foreach (var section in iniDataSet)
             {
-                foreach (var section in iniDataSet)
-                {
-                    sw.WriteLine(BuildSection(section.Key));
-                    foreach (var kv in section.Value)
-                        foreach (string v in kv.Value)
-                            sw.WriteLine($"{kv.Key}={v}");
-                    sw.WriteLine("");
-                }
+                sw.WriteLine(BuildSection(section.Key));
+                foreach (var kv in section.Value)
+                    foreach (string v in kv.Value)
+                        sw.WriteLine($"{kv.Key}={v}");
+                sw.WriteLine("");
             }
         }
         /// <summary>构建节</summary>

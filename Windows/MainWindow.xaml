@@ -15,6 +15,6 @@
             <Button x:Name="Button_TitleMax" Content="🔲" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" Width="30" Height="30" BorderBrush="{x:Null}" FontSize="16" Margin="0,0,30,0" Click="Button_TitleMax_Click" IsEnabled="False"/>
             <Button x:Name="Button_TitleClose" Content="❌" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" Width="30" Height="30" BorderBrush="{x:Null}" FontSize="16" Click="Button_TitleClose_Click"/>
         </Grid>
-        <Frame x:Name="Windows_MainFrame" Content="" Margin="0,30,0,0"/>
+        <Frame x:Name="Frame_MainWindows" Content="" Margin="0,30,0,0" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
