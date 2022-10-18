@@ -1,0 +1,24 @@
+[RammapMode]
+EmptyWorkingSets = true
+EmptySystemWorkingSets = false
+EmptyModifiedPageList = false
+EmptyStandbyList = true
+EmptyPrioity0StandbyList = false
+
+[TaskMode]
+Mode = "ResidualMode"
+
+[ResidualMode]
+UsedMemoryMore = false
+FreeMemoryLower = true
+UsedMemoryMoreSize = 8192
+FreeMemoryLowerSize = 4096
+IntervalTime = 10
+
+[TimeMode]
+IntervalTime = 30
+
+[Extras]
+Lang = "zh-CN"
+AutoMinimized = false
+AutoStartOnUserLogon = false

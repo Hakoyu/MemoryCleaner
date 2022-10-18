@@ -20,7 +20,7 @@ using System.Threading;
 using System.IO;
 using Microsoft.Win32;
 using HKW.Management;
-using HKW.FileIni;
+using HKW.TomlParse;
 using System.Reflection;
 using System.Windows.Resources;
 using System.Runtime.CompilerServices;
@@ -41,43 +41,35 @@ namespace MemoryCleaner.Pages
             }
             else
             {
-                FileIni fini = new(configPath);
                 try
                 {
-                    fini = new(configPath);
+                    using TomlTable toml = TOML.Parse(configPath);
+                    CheckBox_EmptyWorkingSets.IsChecked = toml["RammapMode"]["EmptyWorkingSets"].AsBoolean;
+                    CheckBox_EmptySystemWorkingSets.IsChecked = toml["RammapMode"]["EmptySystemWorkingSets"].AsBoolean;
+                    CheckBox_EmptyModifiedPageList.IsChecked = toml["RammapMode"]["EmptyModifiedPageList"].AsBoolean;
+                    CheckBox_EmptyStandbyList.IsChecked = toml["RammapMode"]["EmptyStandbyList"].AsBoolean;
+                    CheckBox_EmptyPrioity0StandbyList.IsChecked = toml["RammapMode"]["EmptyPrioity0StandbyList"].AsBoolean;
 
-                    CheckBox_EmptyWorkingSets.IsChecked = bool.Parse(fini["RammapMode"]!["EmptyWorkingSets"].First());
-                    CheckBox_EmptySystemWorkingSets.IsChecked = bool.Parse(fini["RammapMode"]!["EmptySystemWorkingSets"].First());
-                    CheckBox_EmptyModifiedPageList.IsChecked = bool.Parse(fini["RammapMode"]!["EmptyModifiedPageList"].First());
-                    CheckBox_EmptyStandbyList.IsChecked = bool.Parse(fini["RammapMode"]!["EmptyStandbyList"].First());
-                    CheckBox_EmptyPrioity0StandbyList.IsChecked = bool.Parse(fini["RammapMode"]!["EmptyPrioity0StandbyList"].First());
-
-                    while (currentMode != null)
-                    {
-                        if (currentMode.Value.GetType().Name == fini["TaskMode"]!["Mode"].First())
-                        {
-                            Frame_ModeSwitch.Content = currentMode.Value;
-                            Label_ModeSwitch.Content = fini["TaskMode"]!["Mode"].First();
-                            break;
-                        }
+                    while (currentMode.Value.GetType().Name == toml["TaskMode"]["Mode"].AsString)
                         currentMode = currentMode.Next!;
-                    }
+                    Frame_ModeSwitch.Content = currentMode.Value;
+                    Label_ModeSwitch.Content = toml["TaskMode"]["Mode"].AsString;
 
-                    residualMode.CheckBox_UsedMemoryMore.IsChecked = bool.Parse(fini["ResidualMode"]!["UsedMemoryMore"].First());
+                    residualMode.CheckBox_UsedMemoryMore.IsChecked = toml["ResidualMode"]["UsedMemoryMore"].AsBoolean;
                     residualMode.TextBox_UsedMemoryMoreSize.Text =
-                        PageFun.MemorySizeParse(int.Parse(fini["ResidualMode"]!["UsedMemoryMoreSize"].First())).ToString();
-                    residualMode.CheckBox_FreeMemoryLower.IsChecked = bool.Parse(fini["ResidualMode"]!["FreeMemoryLower"].First());
+                        PageFun.MemorySizeParse(toml["ResidualMode"]["UsedMemoryMoreSize"].AsInteger).ToString();
+                    residualMode.CheckBox_FreeMemoryLower.IsChecked = toml["ResidualMode"]["FreeMemoryLower"].AsBoolean;
                     residualMode.TextBox_FreeMemoryLowerSize.Text =
-                        PageFun.MemorySizeParse(int.Parse(fini["ResidualMode"]!["FreeMemoryLowerSize"].First())).ToString();
+                        PageFun.MemorySizeParse(toml["ResidualMode"]["FreeMemoryLowerSize"].AsInteger).ToString();
                     residualMode.TextBox_IntervalTime.Text =
-                        PageFun.IntervalTimeParse(int.Parse(fini["ResidualMode"]!["IntervalTime"].First())).ToString();
+                        PageFun.IntervalTimeParse(toml["ResidualMode"]["IntervalTime"].AsInteger).ToString();
 
                     timeMode.TextBox_IntervalTime.Text =
-                        PageFun.IntervalTimeParse(int.Parse(fini["TimeMode"]!["IntervalTime"].First())).ToString();
+                        PageFun.IntervalTimeParse(toml["TimeMode"]["IntervalTime"].AsInteger).ToString();
 
-                    CheckBox_AutoMinimizedAndStart.IsChecked = bool.Parse(fini["Extras"]!["AutoMinimized"].First());
-                    autoMinimized = bool.Parse(fini["Extras"]!["AutoMinimized"].First());
-                    CheckBox_LanuchOnUserLogon.IsChecked = bool.Parse(fini["Extras"]!["AutoStartOnUserLogon"].First());
+                    CheckBox_AutoMinimizedAndStart.IsChecked = toml["Extras"]["AutoMinimized"].AsBoolean;
+                    autoMinimized = toml["Extras"]["AutoMinimized"].AsBoolean;
+                    CheckBox_LanuchOnUserLogon.IsChecked = toml["Extras"]["AutoStartOnUserLogon"].AsBoolean;
                 }
                 catch
                 {
@@ -86,7 +78,6 @@ namespace MemoryCleaner.Pages
                     System.Windows.Forms.Application.Restart();
                     Application.Current.Shutdown(-1);
                 }
-                fini.Close();
             }
             if (!File.Exists(rammapPath))
             {
@@ -106,30 +97,33 @@ namespace MemoryCleaner.Pages
         public void Close()
         {
             management.Close();
+            StopTask();
             ConfigSave();
         }
         void ConfigSave()
         {
-            using FileIni fini = new(configPath);
-            fini["RammapMode"]!["EmptyWorkingSets"].Replace(CheckBox_EmptyWorkingSets.IsChecked.ToString()!);
-            fini["RammapMode"]!["EmptySystemWorkingSets"].Replace(CheckBox_EmptySystemWorkingSets.IsChecked.ToString()!);
-            fini["RammapMode"]!["EmptyModifiedPageList"].Replace(CheckBox_EmptyModifiedPageList.IsChecked.ToString()!);
-            fini["RammapMode"]!["EmptyStandbyList"].Replace(CheckBox_EmptyStandbyList.IsChecked.ToString()!);
-            fini["RammapMode"]!["EmptyPrioity0StandbyList"].Replace(CheckBox_EmptyPrioity0StandbyList.IsChecked.ToString()!);
+            using TomlTable toml = TOML.Parse(configPath);
+            toml["RammapMode"]["EmptyWorkingSets"] = CheckBox_EmptyWorkingSets.IsChecked!;
+            toml["RammapMode"]["EmptySystemWorkingSets"] = CheckBox_EmptySystemWorkingSets.IsChecked!;
+            toml["RammapMode"]["EmptyModifiedPageList"] = CheckBox_EmptyModifiedPageList.IsChecked!;
+            toml["RammapMode"]["EmptyStandbyList"] = CheckBox_EmptyStandbyList.IsChecked!;
+            toml["RammapMode"]["EmptyPrioity0StandbyList"] = CheckBox_EmptyPrioity0StandbyList.IsChecked!;
 
-            fini["TaskMode"]!["Mode"].Replace(currentMode.Value.GetType().Name);
+            toml["TaskMode"]["Mode"] = currentMode.Value.GetType().Name;
 
-            fini["ResidualMode"]!["UsedMemoryMore"].Replace(residualMode.CheckBox_UsedMemoryMore.IsChecked.ToString()!);
-            fini["ResidualMode"]!["UsedMemoryMoreSize"].Replace(residualMode.TextBox_UsedMemoryMoreSize.Text);
-            fini["ResidualMode"]!["FreeMemoryLower"].Replace(residualMode.CheckBox_FreeMemoryLower.IsChecked.ToString()!);
-            fini["ResidualMode"]!["FreeMemoryLowerSize"].Replace(residualMode.TextBox_FreeMemoryLowerSize.Text);
-            fini["ResidualMode"]!["IntervalTime"].Replace(residualMode.TextBox_IntervalTime.Text);
+            toml["ResidualMode"]["UsedMemoryMore"] = residualMode.CheckBox_UsedMemoryMore.IsChecked!;
+            toml["ResidualMode"]["UsedMemoryMoreSize"] = int.Parse(residualMode.TextBox_UsedMemoryMoreSize.Text);
+            toml["ResidualMode"]["FreeMemoryLower"] = residualMode.CheckBox_FreeMemoryLower.IsChecked!;
+            toml["ResidualMode"]["FreeMemoryLowerSize"] = int.Parse(residualMode.TextBox_FreeMemoryLowerSize.Text);
+            toml["ResidualMode"]["IntervalTime"] = int.Parse(residualMode.TextBox_IntervalTime.Text);
 
-            fini["TimeMode"]!["IntervalTime"].Replace(timeMode.TextBox_IntervalTime.Text);
+            toml["TimeMode"]["IntervalTime"] = int.Parse(timeMode.TextBox_IntervalTime.Text);
 
-            fini["Extras"]!["AutoMinimized"].Replace(CheckBox_AutoMinimizedAndStart.IsChecked.ToString()!);
-            fini["Extras"]!["AutoStartOnUserLogon"].Replace(CheckBox_LanuchOnUserLogon.IsChecked.ToString()!);
-            fini["Extras"]!["Lang"].Replace((ComboBox_I18n.SelectedItem as ComboBoxItem)!.ToolTip.ToString()!);
+            toml["Extras"]["AutoMinimized"] = CheckBox_AutoMinimizedAndStart.IsChecked!;
+            toml["Extras"]["AutoStartOnUserLogon"] = CheckBox_LanuchOnUserLogon.IsChecked!;
+            toml["Extras"]["Lang"] = Thread.CurrentThread.CurrentUICulture.Name;
+
+            toml.SaveTo(configPath);
         }
         void InterfaceInitialize()
         {

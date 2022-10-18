@@ -3,15 +3,15 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:I18n="clr-namespace:MemoryCleaner.Langs.Display"
+      xmlns:I18n="clr-namespace:MemoryCleaner.Langs.MainPage"
       xmlns:local="clr-namespace:MemoryCleaner"
       mc:Ignorable="d" 
       d:DesignHeight="420" d:DesignWidth="700"
       Title="MainPage">
-    <Grid Background="White" MouseDown="Grid_MouseDown">
+    <Grid Background="#33FFFFFF" MouseDown="Grid_MouseDown">
         <GroupBox Header="MemoryMetrics" Margin="10,10,0,0" Width="400" Height="150" BorderBrush="#FFD5DFE5" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Grid>
-                <Label x:Name="Label_TotalSystemMemory" Content="{x:Static I18n:Display_I18n.TotalSystemMemory}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="180" Height="30" VerticalContentAlignment="Center" FontSize="16"/>
+                <Label x:Name="Label_TotalSystemMemory" Content="{x:Static I18n:MainPage_I18n.TotalSystemMemory}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="180" Height="30" VerticalContentAlignment="Center" FontSize="16"/>
                 <TextBox x:Name="TextBox_TotalMemory" HorizontalAlignment="Left" Margin="220,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" Height="30" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16" IsReadOnly="True" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False"/>
                 <Label x:Name="Label_FreeMemory" Content="Free memory:" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="180" Height="30" VerticalContentAlignment="Center" FontSize="16"/>
                 <TextBox x:Name="TextBox_FreeMemory" Margin="220,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" HorizontalAlignment="Left" Width="60" FontSize="16" IsReadOnly="True" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" TextChanged="TextBox_FreeMemory_TextChanged"/>
@@ -37,7 +37,7 @@
         <GroupBox Header="ProgramTasks" Margin="10,170,0,0" Height="190" Width="400" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Grid>
                 <Frame x:Name="Frame_ModeSwitch" Margin="0,0,0,50" Height="120" NavigationUIVisibility="Hidden"/>
-                
+
                 <Button x:Name="Button_ModeSwitch" Content="Switch" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Height="30" Width="60" FontSize="16" Click="Button_ModeSwitch_Click"/>
                 <Label x:Name="Label_ModeSwitch" Content="Residual Mode" HorizontalAlignment="Left" Margin="80,0,0,10" VerticalAlignment="Bottom" Height="30" Width="120" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Padding="0,0,0,0"/>
                 <Button x:Name="Button_StopTask" Content="Stop" Margin="0,0,100,10" VerticalAlignment="Bottom" Height="30" FontSize="16" IsEnabled="False" Click="Button_StopTask_Click" HorizontalAlignment="Right" Width="80"/>

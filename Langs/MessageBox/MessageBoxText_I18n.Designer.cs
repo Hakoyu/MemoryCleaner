@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MemoryCleaner.Langs.Display {
+namespace MemoryCleaner.Langs.MessageBox {
     using System;
     
     
@@ -22,24 +22,24 @@ namespace MemoryCleaner.Langs.Display {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Display_I18n {
+    internal class MessageBoxText_I18n {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Display_I18n() {
+        internal MessageBoxText_I18n() {
         }
         
         /// <summary>
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MemoryCleaner.Langs.Display.Display_I18n", typeof(Display_I18n).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MemoryCleaner.Langs.MessageBox.MessageBoxText_I18n", typeof(MessageBoxText_I18n).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,30 +51,12 @@ namespace MemoryCleaner.Langs.Display {
         ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 MemoryCleaner 的本地化字符串。
-        /// </summary>
-        public static string MemoryCleaner {
-            get {
-                return ResourceManager.GetString("MemoryCleaner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Total system memory 的本地化字符串。
-        /// </summary>
-        public static string TotalSystemMemory {
-            get {
-                return ResourceManager.GetString("TotalSystemMemory", resourceCulture);
             }
         }
     }

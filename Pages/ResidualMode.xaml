@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="120" d:DesignWidth="388"
       Title="ResidualControl">
-    <Grid Background="White">
+    <Grid Background="#7FFFFFFF">
         <CheckBox x:Name="CheckBox_UsedMemoryMore" Content="Used memory more than:" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="30" FontSize="16" VerticalContentAlignment="Center" Padding="4,0,0,0"/>
         <TextBox x:Name="TextBox_UsedMemoryMoreSize" InputMethod.IsInputMethodEnabled="False" Margin="250,5,0,0" TextWrapping="Wrap" Text="8192" VerticalAlignment="Top" Height="30" VerticalContentAlignment="Center" FontSize="16" PreviewTextInput="TextBox_NumberInput" HorizontalAlignment="Left" Width="80" KeyDown="TextBox_MemoryMoreSize_KeyDown" LostKeyboardFocus="TextBox_MemorySizeChange_LostKeyboardFocus" HorizontalContentAlignment="Center"/>
         <Label Content="MB" Margin="340,5,0,0" VerticalAlignment="Top" FontSize="16" Height="30" HorizontalAlignment="Left" Width="40"/>

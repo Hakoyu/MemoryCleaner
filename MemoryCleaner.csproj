@@ -9,14 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\Config.ini" />
+    <None Remove="Resources\Config.toml" />
     <None Remove="Resources\Info.ico" />
+    <None Remove="Resources\noop.png" />
     <None Remove="Resources\RAMMap.exe" />
+    <None Remove="Windows\noop.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\Config.ini" />
+    <Resource Include="Resources\Config.toml" />
     <Resource Include="Resources\Info.ico" />
+    <Resource Include="Resources\noop.png" />
     <Resource Include="Resources\RAMMap.exe" />
     <Resource Include="Resources\recycling.ico" />
   </ItemGroup>
@@ -31,10 +34,25 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Code_I18n.resx</DependentUpon>
     </Compile>
-    <Compile Update="Langs\Display\Display_I18n.Designer.cs">
+    <Compile Update="Langs\MainPage\MainPage_I18n.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Display_I18n.resx</DependentUpon>
+      <DependentUpon>MainPage_I18n.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Langs\MainWindow\MainWindow_I18n.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MainWindow_I18n.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Langs\MessageBox\MessageBoxText_I18n.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MessageBoxText_I18n.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Langs\MessageBox\MessageBoxCaption_I18n.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MessageBoxCaption_I18n.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -46,12 +64,24 @@
     <EmbeddedResource Update="Langs\Code\Code_I18n.zh-CN.resx">
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Langs\Display\Display_I18n.resx">
+    <EmbeddedResource Update="Langs\MainPage\MainPage_I18n.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Display_I18n.Designer.cs</LastGenOutput>
+      <LastGenOutput>MainPage_I18n.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Langs\Display\Display_I18n.zh-CN.resx">
+    <EmbeddedResource Update="Langs\MainPage\MainPage_I18n.zh-CN.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Langs\MainWindow\MainWindow_I18n.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MainWindow_I18n.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Langs\MessageBox\MessageBoxText_I18n.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MessageBoxText_I18n.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Langs\MessageBox\MessageBoxCaption_I18n.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MessageBoxCaption_I18n.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

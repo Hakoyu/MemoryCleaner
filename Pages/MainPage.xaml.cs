@@ -23,7 +23,7 @@ using HKW.Management;
 using System.Reflection;
 using System.Windows.Resources;
 using System.Globalization;
-using MemoryCleaner.Langs.Code;
+using MemoryCleaner.Langs.MessageBox;
 using MemoryCleaner.Pages;
 
 namespace MemoryCleaner.Pages
@@ -37,9 +37,9 @@ namespace MemoryCleaner.Pages
         Management management = new();
         int rammapModeCheckedSize = 0;
         DispatcherTimer timerGetMemoryMetrics = new();
-        public const string configPath = @"Config.ini";
+        public const string configPath = @"Config.toml";
         public const string rammapPath = @"RAMMap.exe";
-        public readonly static Uri resourcesConfigUri = new("/Resources/Config.ini", UriKind.Relative);
+        public readonly static Uri resourcesConfigUri = new("/Resources/Config.toml", UriKind.Relative);
         public readonly static Uri resourcesRAMMapUri = new("/Resources/RAMMap.exe", UriKind.Relative);
         ResidualMode residualMode = new();
         Thread residualTask = null!;
@@ -138,7 +138,7 @@ namespace MemoryCleaner.Pages
                 return;
             }
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo((ComboBox_I18n.SelectedItem as ComboBoxItem)!.ToolTip.ToString()!);
-            if (MessageBox.Show("Are you sure you want to quit?", Code_I18n.Warn, MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Are you sure you want to quit?", MessageBoxCaption_I18n.Warn, MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
             {
                 Close();
                 System.Windows.Forms.Application.Restart();

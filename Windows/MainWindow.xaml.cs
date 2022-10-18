@@ -16,14 +16,17 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using Hardcodet.Wpf.TaskbarNotification;
-using System.Drawing;
+//using System.Drawing;
 using System.Globalization;
 using System.Threading;
-using MemoryCleaner.Langs;
-using MemoryCleaner.Langs.Code;
+using MemoryCleaner.Langs.MessageBox;
+using MemoryCleaner.Langs.MainWindow;
 using MemoryCleaner.Pages;
 using System.Windows.Threading;
-using HKW.FileIni;
+using HKW.TomlParse;
+using HKW.WindowAccent;
+//using HKW.WindowCompositorN;
+
 
 namespace MemoryCleaner
 {
@@ -42,6 +45,8 @@ namespace MemoryCleaner
         {
             SetI18n();
             InitializeComponent();
+            //WindowAccent.SetBlurBehind(this, Color.FromArgb(64, 0, 0, 0));
+            //WindowAccent.SetAcrylicBlurBehind(this, 0x64000000);
             InterfaceInitialize();
             ButtonInitialize();
             NotifyIconInitialize();
@@ -57,20 +62,20 @@ namespace MemoryCleaner
                 using StreamWriter sw = File.AppendText(MainPage.configPath);
                 sw.Write(config);
                 sw.Close();
-                using FileIni fini = new(MainPage.configPath);
-                fini["Extras"]!["Lang"].Replace(Thread.CurrentThread.CurrentUICulture.Name);
-                fini.Save();
+                using TomlTable toml = TOML.Parse(MainPage.configPath);
+                toml["Extras"]["Lang"] = Thread.CurrentThread.CurrentUICulture.Name;
+                toml.SaveTo(MainPage.configPath);
             }
             else
             {
                 try
                 {
-                    FileIni fini = new(MainPage.configPath);
-                    Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(fini["Extras"]!["Lang"].First());
-                    fini.Close();
+                    using TomlTable toml = TOML.Parse(MainPage.configPath);
+                    Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(toml["Extras"]["Lang"].AsString);
                 }
                 catch
                 {
+                    //删除配置文件并重启应用
                     MessageBox.Show("Settings loading error\nWill restore default settings and restart the application");
                     File.Delete(MainPage.configPath);
                     System.Windows.Forms.Application.Restart();
@@ -115,8 +120,8 @@ namespace MemoryCleaner
         }
         void NotifyIconInitialize()
         {
-            tbi.Icon = new Icon(Application.GetResourceStream(new Uri("/Resources/recycling.ico", UriKind.Relative)).Stream);
-            tbi.ToolTipText = "Memory Cleaner";
+            tbi.Icon = new System.Drawing.Icon(Application.GetResourceStream(new Uri("/Resources/recycling.ico", UriKind.Relative)).Stream);
+            tbi.ToolTipText = MainWindow_I18n.MemoryCleaner;
             tbi.TrayMouseDoubleClick += (o, e) => { Visibility = Visibility.Visible; };
             ContextMenu contextMenu = new();
             contextMenu.Items.Add(NotifyIcon_Run);
@@ -150,7 +155,7 @@ namespace MemoryCleaner
         //关闭
         private void Button_TitleClose_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to quit?", Code_I18n.Warn, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Are you sure you want to quit?", MessageBoxCaption_I18n.Warn, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 CloseProgram();
         }
         private void CloseProgram()
