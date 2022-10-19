@@ -19,7 +19,6 @@
   <ItemGroup>
     <Resource Include="Resources\Config.toml" />
     <Resource Include="Resources\Info.ico" />
-    <Resource Include="Resources\noop.png" />
     <Resource Include="Resources\RAMMap.exe" />
     <Resource Include="Resources\recycling.ico" />
   </ItemGroup>

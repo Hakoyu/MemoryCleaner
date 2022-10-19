@@ -24,7 +24,7 @@ using System.Reflection;
 using System.Windows.Resources;
 using System.Globalization;
 using MemoryCleaner.Langs.MessageBox;
-using MemoryCleaner.Pages;
+using MemoryCleaner.Lib;
 
 namespace MemoryCleaner.Pages
 {
@@ -37,10 +37,6 @@ namespace MemoryCleaner.Pages
         Management management = new();
         int rammapModeCheckedSize = 0;
         DispatcherTimer timerGetMemoryMetrics = new();
-        public const string configPath = @"Config.toml";
-        public const string rammapPath = @"RAMMap.exe";
-        public readonly static Uri resourcesConfigUri = new("/Resources/Config.toml", UriKind.Relative);
-        public readonly static Uri resourcesRAMMapUri = new("/Resources/RAMMap.exe", UriKind.Relative);
         ResidualMode residualMode = new();
         Thread residualTask = null!;
         TimeMode timeMode = new();
@@ -55,7 +51,7 @@ namespace MemoryCleaner.Pages
             taskMode.AddLast(residualMode);
             currentMode = taskMode.First!;
             //DateInitialize();
-            PageFun.totalMemory = management.GetMemoryMetrics()!.Total;
+            Global.totalMemory = management.GetMemoryMetrics()!.Total;
             InitializeComponent();
             rammapMode.Add(RammapMode.EmptyWorkingSets, CheckBox_EmptyWorkingSets);
             rammapMode.Add(RammapMode.EmptySystemWorkingSets, CheckBox_EmptySystemWorkingSets);
@@ -71,7 +67,7 @@ namespace MemoryCleaner.Pages
             TextBox textBox = (TextBox)sender;
             double usedMemory = double.Parse(textBox.Text);
             Progressbar_MemoryMetrics.Value = usedMemory;
-            Label_MemoryMetrics.Content = (usedMemory / PageFun.totalMemory).ToString("0%");
+            Label_MemoryMetrics.Content = (usedMemory / Global.totalMemory).ToString("0%");
             if (!Button_StartTask.IsEnabled && residualMode.CheckBox_UsedMemoryMore.IsChecked is true && usedMemory > int.Parse(residualMode.TextBox_UsedMemoryMoreSize.Text))
                 TaskRammpRun();
         }
@@ -92,7 +88,7 @@ namespace MemoryCleaner.Pages
 
         private void Button_ExecuteNow_Click(object sender, RoutedEventArgs e)
         {
-            ConfigSave();
+            SaveConfig();
             ExecuteNow();
         }
         private void RammapModeStateChanges(object sender, RoutedEventArgs e)
@@ -130,6 +126,7 @@ namespace MemoryCleaner.Pages
             Windows.InfoWindow infoWindow = new();
             infoWindow.ShowDialog();
         }
+        
         private void ComboBox_I18n_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (isFirst)
@@ -138,11 +135,13 @@ namespace MemoryCleaner.Pages
                 return;
             }
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo((ComboBox_I18n.SelectedItem as ComboBoxItem)!.ToolTip.ToString()!);
-            if (MessageBox.Show("Are you sure you want to quit?", MessageBoxCaption_I18n.Warn, MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Confirmation of changes?", MessageBoxCaption_I18n.Warn, MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
             {
-                Close();
-                System.Windows.Forms.Application.Restart();
-                Application.Current.Shutdown(-1);
+                SaveConfig();
+                ChangeI18n();
+                //Close();
+                //System.Windows.Forms.Application.Restart();
+                //Application.Current.Shutdown(-1);
             }
         }
         private void Button_ModeSwitch_Click(object sender, RoutedEventArgs e)

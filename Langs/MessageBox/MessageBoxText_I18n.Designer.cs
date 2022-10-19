@@ -59,5 +59,23 @@ namespace MemoryCleaner.Langs.MessageBox {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   查找类似 ConfigLoadingError 的本地化字符串。
+        /// </summary>
+        internal static string ConfigLoadingError {
+            get {
+                return ResourceManager.GetString("ConfigLoadingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 ConfirmExit 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmExit {
+            get {
+                return ResourceManager.GetString("ConfirmExit", resourceCulture);
+            }
+        }
     }
 }

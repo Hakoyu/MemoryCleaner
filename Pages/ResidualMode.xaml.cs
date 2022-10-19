@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MemoryCleaner.Pages;
+using MemoryCleaner.Lib;
 
 namespace MemoryCleaner.Pages
 {
@@ -35,7 +35,7 @@ namespace MemoryCleaner.Pages
         private void TextBox_MemorySizeChange_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
-            textBox.Text = PageFun.MemorySizeParse(int.Parse(textBox.Text)).ToString();
+            textBox.Text = Global.MemorySizeParse(int.Parse(textBox.Text)).ToString();
         }
         private void TextBox_MinimumIntervalSize_KeyDown(object sender, KeyEventArgs e)
         {
@@ -45,7 +45,7 @@ namespace MemoryCleaner.Pages
         private void TextBox_MinimumIntervalSize_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
-            textBox.Text = PageFun.IntervalTimeParse(int.Parse(textBox.Text)).ToString();
+            textBox.Text = Global.IntervalTimeParse(int.Parse(textBox.Text)).ToString();
         }
     }
 }

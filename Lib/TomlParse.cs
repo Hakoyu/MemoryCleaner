@@ -1905,9 +1905,16 @@ namespace HKW.TomlParse
         // }
         public static TomlTable Parse(string path)
         {
-            using StreamReader reader = File.OpenText(path);
-            using var parser = new TOMLParser(reader) { ForceASCII = ForceASCII };
-            return parser.Parse();
+            try
+            {
+                using StreamReader reader = File.OpenText(path);
+                using var parser = new TOMLParser(reader) { ForceASCII = ForceASCII };
+                return parser.Parse();
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 

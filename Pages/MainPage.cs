@@ -24,6 +24,8 @@ using HKW.TomlParse;
 using System.Reflection;
 using System.Windows.Resources;
 using System.Runtime.CompilerServices;
+using MemoryCleaner.Lib;
+using MemoryCleaner.Langs.MessageBox;
 
 namespace MemoryCleaner.Pages
 {
@@ -32,40 +34,33 @@ namespace MemoryCleaner.Pages
         Thread rammpRun = null!;
         void ConfigInitialize()
         {
-            if (!File.Exists(configPath))
-            {
-                using StreamReader sr = new(Application.GetResourceStream(resourcesConfigUri).Stream);
-                string config = sr.ReadToEnd();
-                using StreamWriter sw = File.AppendText(configPath);
-                sw.Write(config);
-            }
-            else
+            if (Global.CreateConfigFile())
             {
                 try
                 {
-                    using TomlTable toml = TOML.Parse(configPath);
+                    using TomlTable toml = TOML.Parse(Global.configPath);
                     CheckBox_EmptyWorkingSets.IsChecked = toml["RammapMode"]["EmptyWorkingSets"].AsBoolean;
                     CheckBox_EmptySystemWorkingSets.IsChecked = toml["RammapMode"]["EmptySystemWorkingSets"].AsBoolean;
                     CheckBox_EmptyModifiedPageList.IsChecked = toml["RammapMode"]["EmptyModifiedPageList"].AsBoolean;
                     CheckBox_EmptyStandbyList.IsChecked = toml["RammapMode"]["EmptyStandbyList"].AsBoolean;
                     CheckBox_EmptyPrioity0StandbyList.IsChecked = toml["RammapMode"]["EmptyPrioity0StandbyList"].AsBoolean;
 
-                    while (currentMode.Value.GetType().Name == toml["TaskMode"]["Mode"].AsString)
+                    while (currentMode.Value.GetType().Name != toml["TaskMode"]["Mode"].AsString)
                         currentMode = currentMode.Next!;
                     Frame_ModeSwitch.Content = currentMode.Value;
                     Label_ModeSwitch.Content = toml["TaskMode"]["Mode"].AsString;
 
                     residualMode.CheckBox_UsedMemoryMore.IsChecked = toml["ResidualMode"]["UsedMemoryMore"].AsBoolean;
                     residualMode.TextBox_UsedMemoryMoreSize.Text =
-                        PageFun.MemorySizeParse(toml["ResidualMode"]["UsedMemoryMoreSize"].AsInteger).ToString();
+                        Global.MemorySizeParse(toml["ResidualMode"]["UsedMemoryMoreSize"].AsInteger).ToString();
                     residualMode.CheckBox_FreeMemoryLower.IsChecked = toml["ResidualMode"]["FreeMemoryLower"].AsBoolean;
                     residualMode.TextBox_FreeMemoryLowerSize.Text =
-                        PageFun.MemorySizeParse(toml["ResidualMode"]["FreeMemoryLowerSize"].AsInteger).ToString();
+                        Global.MemorySizeParse(toml["ResidualMode"]["FreeMemoryLowerSize"].AsInteger).ToString();
                     residualMode.TextBox_IntervalTime.Text =
-                        PageFun.IntervalTimeParse(toml["ResidualMode"]["IntervalTime"].AsInteger).ToString();
+                        Global.IntervalTimeParse(toml["ResidualMode"]["IntervalTime"].AsInteger).ToString();
 
                     timeMode.TextBox_IntervalTime.Text =
-                        PageFun.IntervalTimeParse(toml["TimeMode"]["IntervalTime"].AsInteger).ToString();
+                        Global.IntervalTimeParse(toml["TimeMode"]["IntervalTime"].AsInteger).ToString();
 
                     CheckBox_AutoMinimizedAndStart.IsChecked = toml["Extras"]["AutoMinimized"].AsBoolean;
                     autoMinimized = toml["Extras"]["AutoMinimized"].AsBoolean;
@@ -73,18 +68,15 @@ namespace MemoryCleaner.Pages
                 }
                 catch
                 {
-                    MessageBox.Show("Settings loading error\nWill restore default settings and restart the application");
-                    File.Delete(configPath);
-                    System.Windows.Forms.Application.Restart();
-                    Application.Current.Shutdown(-1);
+                    ConfigLoadError();
                 }
             }
-            if (!File.Exists(rammapPath))
+            if (!File.Exists(Global.rammapPath))
             {
-                using Stream stream = Application.GetResourceStream(resourcesRAMMapUri).Stream;
+                using Stream stream = Application.GetResourceStream(Global.resourcesRAMMapUri).Stream;
                 byte[] b = new byte[stream.Length];
                 stream.Read(b, 0, b.Length);
-                using FileStream fs = File.Create(rammapPath);
+                using FileStream fs = File.Create(Global.rammapPath);
                 fs.Write(b, 0, b.Length);
             }
         }
@@ -98,37 +90,52 @@ namespace MemoryCleaner.Pages
         {
             management.Close();
             StopTask();
-            ConfigSave();
+            SaveConfig();
         }
-        void ConfigSave()
+        void SaveConfig()
         {
-            using TomlTable toml = TOML.Parse(configPath);
-            toml["RammapMode"]["EmptyWorkingSets"] = CheckBox_EmptyWorkingSets.IsChecked!;
-            toml["RammapMode"]["EmptySystemWorkingSets"] = CheckBox_EmptySystemWorkingSets.IsChecked!;
-            toml["RammapMode"]["EmptyModifiedPageList"] = CheckBox_EmptyModifiedPageList.IsChecked!;
-            toml["RammapMode"]["EmptyStandbyList"] = CheckBox_EmptyStandbyList.IsChecked!;
-            toml["RammapMode"]["EmptyPrioity0StandbyList"] = CheckBox_EmptyPrioity0StandbyList.IsChecked!;
+            try
+            {
+                using TomlTable toml = TOML.Parse(Global.configPath);
+                toml["RammapMode"]["EmptyWorkingSets"] = CheckBox_EmptyWorkingSets.IsChecked!;
+                toml["RammapMode"]["EmptySystemWorkingSets"] = CheckBox_EmptySystemWorkingSets.IsChecked!;
+                toml["RammapMode"]["EmptyModifiedPageList"] = CheckBox_EmptyModifiedPageList.IsChecked!;
+                toml["RammapMode"]["EmptyStandbyList"] = CheckBox_EmptyStandbyList.IsChecked!;
+                toml["RammapMode"]["EmptyPrioity0StandbyList"] = CheckBox_EmptyPrioity0StandbyList.IsChecked!;
 
-            toml["TaskMode"]["Mode"] = currentMode.Value.GetType().Name;
+                toml["TaskMode"]["Mode"] = currentMode.Value.GetType().Name;
 
-            toml["ResidualMode"]["UsedMemoryMore"] = residualMode.CheckBox_UsedMemoryMore.IsChecked!;
-            toml["ResidualMode"]["UsedMemoryMoreSize"] = int.Parse(residualMode.TextBox_UsedMemoryMoreSize.Text);
-            toml["ResidualMode"]["FreeMemoryLower"] = residualMode.CheckBox_FreeMemoryLower.IsChecked!;
-            toml["ResidualMode"]["FreeMemoryLowerSize"] = int.Parse(residualMode.TextBox_FreeMemoryLowerSize.Text);
-            toml["ResidualMode"]["IntervalTime"] = int.Parse(residualMode.TextBox_IntervalTime.Text);
+                toml["ResidualMode"]["UsedMemoryMore"] = residualMode.CheckBox_UsedMemoryMore.IsChecked!;
+                toml["ResidualMode"]["UsedMemoryMoreSize"] = int.Parse(residualMode.TextBox_UsedMemoryMoreSize.Text);
+                toml["ResidualMode"]["FreeMemoryLower"] = residualMode.CheckBox_FreeMemoryLower.IsChecked!;
+                toml["ResidualMode"]["FreeMemoryLowerSize"] = int.Parse(residualMode.TextBox_FreeMemoryLowerSize.Text);
+                toml["ResidualMode"]["IntervalTime"] = int.Parse(residualMode.TextBox_IntervalTime.Text);
 
-            toml["TimeMode"]["IntervalTime"] = int.Parse(timeMode.TextBox_IntervalTime.Text);
+                toml["TimeMode"]["IntervalTime"] = int.Parse(timeMode.TextBox_IntervalTime.Text);
 
-            toml["Extras"]["AutoMinimized"] = CheckBox_AutoMinimizedAndStart.IsChecked!;
-            toml["Extras"]["AutoStartOnUserLogon"] = CheckBox_LanuchOnUserLogon.IsChecked!;
-            toml["Extras"]["Lang"] = Thread.CurrentThread.CurrentUICulture.Name;
+                toml["Extras"]["AutoMinimized"] = CheckBox_AutoMinimizedAndStart.IsChecked!;
+                toml["Extras"]["AutoStartOnUserLogon"] = CheckBox_LanuchOnUserLogon.IsChecked!;
+                toml["Extras"]["Lang"] = Thread.CurrentThread.CurrentUICulture.Name;
 
-            toml.SaveTo(configPath);
+                toml.SaveTo(Global.configPath);
+            }
+            catch
+            {
+                ConfigLoadError();
+            }
         }
         void InterfaceInitialize()
         {
-            Progressbar_MemoryMetrics.Maximum = PageFun.totalMemory;
-            TextBox_TotalMemory.Text = PageFun.totalMemory.ToString();
+            foreach (ComboBoxItem item in ComboBox_I18n.Items)
+            {
+                if (item.ToolTip.ToString() == Thread.CurrentThread.CurrentUICulture.Name)
+                {
+                    ComboBox_I18n.SelectedItem = item;
+                    break;
+                }
+            }
+            Progressbar_MemoryMetrics.Maximum = Global.totalMemory;
+            TextBox_TotalMemory.Text = Global.totalMemory.ToString();
             SetTimerGetMemoryMetrics();
             residualTask = new Thread(ResidualTaskTimer);
             timeTask = new Thread(TimeTaskTimer);
@@ -261,5 +268,10 @@ namespace MemoryCleaner.Pages
                 });
             }
         }
+        public delegate void ChangeI18nEvent();
+        public ChangeI18nEvent ChangeI18n = null!;
+
+        public delegate void ConfigLoadErrorEvent();
+        public ConfigLoadErrorEvent ConfigLoadError = null!;
     }
 }
