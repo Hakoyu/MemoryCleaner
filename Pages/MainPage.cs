@@ -34,8 +34,8 @@ namespace MemoryCleaner.Pages
     {
         Thread rammpRun = null!;
         public delegate void MainPageEvent();
-        public MainPageEvent ChangeI18n = null!;
-        public MainPageEvent ConfigLoadError = null!;
+        public event MainPageEvent ChangeI18n = null!;
+        public event MainPageEvent ConfigLoadError = null!;
 
         void BeforeInitialisation()
         {
