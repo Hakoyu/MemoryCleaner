@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConfigLoadingError" xml:space="preserve">
-    <value>ConfigLoadingError</value>
+  <data name="IntervalTime" xml:space="preserve">
+    <value>间隔运行时间</value>
   </data>
-  <data name="ConfirmExit" xml:space="preserve">
-    <value>ConfirmExit</value>
+  <data name="Min" xml:space="preserve">
+    <value>分</value>
   </data>
-  <data name="SwitchLanguage" xml:space="preserve">
-    <value>SwitchLanguage</value>
+  <data name="NextRun" xml:space="preserve">
+    <value>下次运行剩余时间</value>
   </data>
 </root>

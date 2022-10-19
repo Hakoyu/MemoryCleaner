@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MemoryCleaner.Langs.MainWindow {
+namespace MemoryCleaner.Langs.Windows.MainWindow {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace MemoryCleaner.Langs.MainWindow {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MemoryCleaner.Langs.MainWindow.MainWindow_I18n", typeof(MainWindow_I18n).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MemoryCleaner.Langs.Windows.MainWindow.MainWindow_I18n", typeof(MainWindow_I18n).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

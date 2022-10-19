@@ -117,13 +117,82 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConfigLoadingError" xml:space="preserve">
-    <value>ConfigLoadingError</value>
+  <data name="AutoMinimizedAndStart" xml:space="preserve">
+    <value>自动最小化并启动清理任务</value>
   </data>
-  <data name="ConfirmExit" xml:space="preserve">
-    <value>ConfirmExit</value>
+  <data name="EmptyModifiedPageList" xml:space="preserve">
+    <value>清理已修改页面列表</value>
   </data>
-  <data name="SwitchLanguage" xml:space="preserve">
-    <value>SwitchLanguage</value>
+  <data name="EmptyModifiedPageListTip" xml:space="preserve">
+    <value>EmptyModifiedPageListTip</value>
+  </data>
+  <data name="EmptyPrioity0StandbyList" xml:space="preserve">
+    <value>清理优先级为0的备用列表</value>
+  </data>
+  <data name="EmptyPrioity0StandbyListTip" xml:space="preserve">
+    <value>EmptyPrioity0StandbyListTip</value>
+  </data>
+  <data name="EmptyStandbyList" xml:space="preserve">
+    <value>清理备用列表</value>
+  </data>
+  <data name="EmptyStandbyListTip" xml:space="preserve">
+    <value>EmptyStandbyListTip</value>
+  </data>
+  <data name="EmptySystemWorkingSets" xml:space="preserve">
+    <value>清理系统工作集</value>
+  </data>
+  <data name="EmptySystemWorkingSetsTip" xml:space="preserve">
+    <value>EmptySystemWorkingSetsTip</value>
+  </data>
+  <data name="EmptyWorkingSets" xml:space="preserve">
+    <value>清理工作集</value>
+  </data>
+  <data name="EmptyWorkingSetsTip" xml:space="preserve">
+    <value>EmptyWorkingSetsTip</value>
+  </data>
+  <data name="ExecuteNow" xml:space="preserve">
+    <value>执行清理</value>
+  </data>
+  <data name="FreeMemory" xml:space="preserve">
+    <value>可用内存:</value>
+  </data>
+  <data name="LanuchOnUserLogon" xml:space="preserve">
+    <value>开机启动</value>
+  </data>
+  <data name="MemoryMetrics" xml:space="preserve">
+    <value>内存状态</value>
+  </data>
+  <data name="ModeSwitch" xml:space="preserve">
+    <value>切换</value>
+  </data>
+  <data name="NoCurrentTasks" xml:space="preserve">
+    <value>无任务</value>
+  </data>
+  <data name="ProgramTasks" xml:space="preserve">
+    <value>清理任务</value>
+  </data>
+  <data name="RammapMode" xml:space="preserve">
+    <value>内存清理模式</value>
+  </data>
+  <data name="ResidualMode" xml:space="preserve">
+    <value>内存检测模式</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>启动</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="TimeMode" xml:space="preserve">
+    <value>时间检测模式</value>
+  </data>
+  <data name="TotalSystemMemory" xml:space="preserve">
+    <value>系统内存总量:</value>
+  </data>
+  <data name="UsedMemory" xml:space="preserve">
+    <value>已使用内存:</value>
   </data>
 </root>

@@ -117,10 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MemoryCleaner" xml:space="preserve">
-    <value>内存清理器</value>
+  <data name="Close" xml:space="preserve">
+    <value>关闭应用</value>
   </data>
-  <data name="TotalSystemMemory" xml:space="preserve">
-    <value>系统内存总量</value>
+  <data name="Run" xml:space="preserve">
+    <value>运行清理</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>显示窗口</value>
   </data>
 </root>

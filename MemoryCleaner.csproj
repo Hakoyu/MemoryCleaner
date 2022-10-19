@@ -33,12 +33,27 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Code_I18n.resx</DependentUpon>
     </Compile>
-    <Compile Update="Langs\MainPage\MainPage_I18n.Designer.cs">
+    <Compile Update="Langs\NotifyIcon\NotifyIcon_I18n.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>NotifyIcon_I18n.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Langs\Pages\MainPage\MainPage_I18n.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MainPage_I18n.resx</DependentUpon>
     </Compile>
-    <Compile Update="Langs\MainWindow\MainWindow_I18n.Designer.cs">
+    <Compile Update="Langs\Pages\ResidualModePage\ResidualModePage_I18n.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ResidualModePage_I18n.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Langs\Pages\TimeModePage\TimeModePage_I18n.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TimeModePage_I18n.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Langs\Windows\MainWindow\MainWindow_I18n.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MainWindow_I18n.resx</DependentUpon>
@@ -63,14 +78,26 @@
     <EmbeddedResource Update="Langs\Code\Code_I18n.zh-CN.resx">
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Langs\MainPage\MainPage_I18n.resx">
+    <EmbeddedResource Update="Langs\NotifyIcon\NotifyIcon_I18n.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>NotifyIcon_I18n.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Langs\Pages\MainPage\MainPage_I18n.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MainPage_I18n.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Langs\MainPage\MainPage_I18n.zh-CN.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+    <EmbeddedResource Update="Langs\Pages\MainPage\MainPage_I18n.zh-CN.resx">
+      <Generator></Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Langs\MainWindow\MainWindow_I18n.resx">
+    <EmbeddedResource Update="Langs\Pages\ResidualModePage\ResidualModePage_I18n.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResidualModePage_I18n.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Langs\Pages\TimeModePage\TimeModePage_I18n.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TimeModePage_I18n.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Langs\Windows\MainWindow\MainWindow_I18n.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MainWindow_I18n.Designer.cs</LastGenOutput>
     </EmbeddedResource>

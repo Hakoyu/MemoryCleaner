@@ -1,17 +1,18 @@
-﻿<Page x:Class="MemoryCleaner.Pages.TimeMode"
+﻿<Page x:Class="MemoryCleaner.Pages.TimeModePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MemoryCleaner.Pages"
+      xmlns:I18n="clr-namespace:MemoryCleaner.Langs.Pages.TimeModePage"
       mc:Ignorable="d" 
       d:DesignHeight="120" d:DesignWidth="388"
       Title="TimeControl">
-    <Grid Background="#7FFFFFFF">
-        <Label Content="Interval travel time:" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
+    <Grid Background="#33FFFFFF">
+        <Label Content="{x:Static I18n:TimeModePage_I18n.IntervalTime}" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
         <TextBox x:Name="TextBox_IntervalTime" HorizontalAlignment="Right" Margin="0,5,60,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top" Width="100" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" PreviewTextInput="TextBox_NumberInput" KeyDown="TextBox_IntervalTime_KeyDown" LostKeyboardFocus="TextBox_IntervalTime_LostKeyboardFocus"/>
-        <Label Content="min" HorizontalAlignment="Left" Margin="338,5,0,0" VerticalAlignment="Top" Height="30" Width="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16"/>
-        <Label Content="Next execution:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" FontSize="16"/>
+        <Label Content="{x:Static I18n:TimeModePage_I18n.Min}" HorizontalAlignment="Left" Margin="338,5,0,0" VerticalAlignment="Top" Height="30" Width="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16"/>
+        <Label Content="{x:Static I18n:TimeModePage_I18n.NextRun}" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" FontSize="16"/>
         <ProgressBar x:Name="ProgresBar_TimeLeft" Height="30" Margin="10,0,10,10" VerticalAlignment="Bottom"/>
         <Label x:Name="Label_TimeLeft" Content="00:00" Margin="10,0,10,10" VerticalAlignment="Bottom" Height="30" FontSize="16" HorizontalContentAlignment="Center"/>
     </Grid>

@@ -18,21 +18,31 @@ using MemoryCleaner.Lib;
 namespace MemoryCleaner.Pages
 {
     /// <summary>
-    /// TimeMode.xaml 的交互逻辑
+    /// ResidualModePage.xaml 的交互逻辑
     /// </summary>
-    public partial class TimeMode : Page
+    public partial class ResidualModePage : Page
     {
-        public TimeMode()
+        public ResidualModePage()
         {
             InitializeComponent();
         }
         private void TextBox_NumberInput(object sender, TextCompositionEventArgs e) => e.Handled = !Regex.IsMatch(e.Text, "[0-9]");
-        private void TextBox_IntervalTime_KeyDown(object sender, KeyEventArgs e)
+        private void TextBox_MemoryMoreSize_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
                 Keyboard.ClearFocus();
         }
-        private void TextBox_IntervalTime_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        private void TextBox_MemorySizeChange_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            textBox.Text = Global.MemorySizeParse(int.Parse(textBox.Text)).ToString();
+        }
+        private void TextBox_MinimumIntervalSize_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                Keyboard.ClearFocus();
+        }
+        private void TextBox_MinimumIntervalSize_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
             textBox.Text = Global.IntervalTimeParse(int.Parse(textBox.Text)).ToString();

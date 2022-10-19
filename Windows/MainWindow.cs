@@ -1,6 +1,7 @@
 ﻿using HKW.TomlParse;
-using MemoryCleaner.Langs.MainWindow;
+using MemoryCleaner.Langs.Windows.MainWindow;
 using MemoryCleaner.Langs.MessageBox;
+using MemoryCleaner.Langs.NotifyIcon;
 using MemoryCleaner.Lib;
 using MemoryCleaner.Pages;
 using System;
@@ -43,6 +44,7 @@ namespace MemoryCleaner.Windows
             mainPage = new();
             mainPage.ChangeI18n += ChangeI18n;
             mainPage.ConfigLoadError += ConfigLoadError;
+            GC.Collect();
         }
         void ChangeI18n()
         {
@@ -53,7 +55,7 @@ namespace MemoryCleaner.Windows
         }
         void ConfigLoadError()
         {
-            MessageBox.Show(MessageBoxText_I18n.ConfigLoadingError,MessageBoxCaption_I18n.Warn,MessageBoxButton.OK);
+            MessageBox.Show(MessageBoxText_I18n.ConfigLoadingError, MessageBoxCaption_I18n.Warn, MessageBoxButton.OK);
             File.Delete(Global.configPath);
             Global.CreateConfigFile();
             SaveI18n2Config();
@@ -72,39 +74,43 @@ namespace MemoryCleaner.Windows
                 mainPage.StartTask();
             }
         }
-        void InterfaceInitialize()
+        void DisplayInitialisation()
         {
             Frame_MainWindows.Content = mainPage;
             if (mainPage.autoMinimized == true)
                 Button_TitleMin_Click(null!, null!);
         }
-        void NotifyIconButtonInitialize()
+        void InitializeNotifyIcon()
         {
-            NotifyIcon_Run.Header = "Run";
-            NotifyIcon_Run.Icon = "♻";
-            NotifyIcon_Run.Click += (o, e) => mainPage.ExecuteNow();
-            NotifyIcon_Show.Header = "Show";
-            NotifyIcon_Show.Icon = "🔲";
-            NotifyIcon_Show.Click += (o, e) => Visibility = Visibility.Visible;
-            NotifyIcon_Close.Header = "Close";
-            NotifyIcon_Close.Icon = "❌";
-            NotifyIcon_Close.Click += (o, e) => CloseProgram();
-        }
-        void NotifyIconInitialize()
-        {
-            tbi.Icon = new System.Drawing.Icon(Application.GetResourceStream(new Uri("/Resources/recycling.ico", UriKind.Relative)).Stream);
-            tbi.ToolTipText = MainWindow_I18n.MemoryCleaner;
-            tbi.TrayMouseDoubleClick += (o, e) => { Visibility = Visibility.Visible; };
+            SetNotifyIconButton();
+            raskbarIcon.Icon = new System.Drawing.Icon(Application.GetResourceStream(new Uri("/Resources/recycling.ico", UriKind.Relative)).Stream);
+            raskbarIcon.ToolTipText = MainWindow_I18n.MemoryCleaner;
+            raskbarIcon.TrayMouseDoubleClick += (o, e) => { Visibility = Visibility.Visible; };
             ContextMenu contextMenu = new();
             contextMenu.Items.Add(NotifyIcon_Run);
             contextMenu.Items.Add(NotifyIcon_Show);
             contextMenu.Items.Add(NotifyIcon_Close);
-            tbi.ContextMenu = contextMenu;
+            raskbarIcon.ContextMenu = contextMenu;
+        }
+        void SetNotifyIconButton()
+        {
+            NotifyIcon_Run.Header = NotifyIcon_I18n.Run;
+            NotifyIcon_Run.Icon = "♻";
+            NotifyIcon_Run.Click += (o, e) => mainPage.ExecuteNow();
+            NotifyIcon_Show.Header = NotifyIcon_I18n.Show;
+            NotifyIcon_Show.Icon = "🔲";
+            NotifyIcon_Show.Click += (o, e) => Visibility = Visibility.Visible;
+            NotifyIcon_Close.Header = NotifyIcon_I18n.Close;
+            NotifyIcon_Close.Icon = "❌";
+            NotifyIcon_Close.Click += (o, e) => CloseProgram();
         }
         private void CloseProgram()
         {
-            mainPage.Close();
-            Close();
+            if (MessageBox.Show(MessageBoxText_I18n.ConfirmExit, MessageBoxCaption_I18n.Warn, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                mainPage.Close();
+                Close();
+            }
         }
     }
 }

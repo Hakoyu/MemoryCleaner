@@ -16,7 +16,7 @@ namespace HKW.Management
         public int Free;
     }
     ///<summary>系统</summary>
-    partial class Management : IDisposable
+    partial class Management
     {
         public Management()
         {
@@ -25,19 +25,10 @@ namespace HKW.Management
             if (!GetsSystemType)
                 throw new ArgumentNullException(ToString(), "This is not Windows");
         }
-        ~Management()
+        public void Close()
         {
-            Dispose(false);
-        }
-        public void Close() => Dispose(true);
-        public void Dispose() => Dispose(true);
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                process.Close();
-                process = null!;
-            }
+            process?.Close();
+            process = null!;
         }
         private Process process = null!;
         private bool GetsSystemType => RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
@@ -55,6 +46,8 @@ namespace HKW.Management
         }
         public MemoryMetrics? GetMemoryMetrics()
         {
+            if (process == null)
+                return null;
             MemoryMetrics mm = new();
             process.StandardInput.WriteLine("OS get FreePhysicalMemory,TotalVisibleMemorySize /Value");
             List<string> lines = new();

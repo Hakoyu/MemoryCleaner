@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MemoryCleaner.Langs.MainPage {
+namespace MemoryCleaner.Langs.Pages.TimeModePage {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace MemoryCleaner.Langs.MainPage {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class MainPage_I18n {
+    public class TimeModePage_I18n {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal MainPage_I18n() {
+        internal TimeModePage_I18n() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace MemoryCleaner.Langs.MainPage {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MemoryCleaner.Langs.MainPage.MainPage_I18n", typeof(MainPage_I18n).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MemoryCleaner.Langs.Pages.TimeModePage.TimeModePage_I18n", typeof(TimeModePage_I18n).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,20 +61,29 @@ namespace MemoryCleaner.Langs.MainPage {
         }
         
         /// <summary>
-        ///   查找类似 MemoryCleaner 的本地化字符串。
+        ///   查找类似 IntervalTime 的本地化字符串。
         /// </summary>
-        public static string MemoryCleaner {
+        public static string IntervalTime {
             get {
-                return ResourceManager.GetString("MemoryCleaner", resourceCulture);
+                return ResourceManager.GetString("IntervalTime", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Total system memory 的本地化字符串。
+        ///   查找类似 Min 的本地化字符串。
         /// </summary>
-        public static string TotalSystemMemory {
+        public static string Min {
             get {
-                return ResourceManager.GetString("TotalSystemMemory", resourceCulture);
+                return ResourceManager.GetString("Min", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 NextExecution 的本地化字符串。
+        /// </summary>
+        public static string NextRun {
+            get {
+                return ResourceManager.GetString("NextRun", resourceCulture);
             }
         }
     }

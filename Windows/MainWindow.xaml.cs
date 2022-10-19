@@ -20,7 +20,7 @@ using System.Globalization;
 using System.Threading;
 using MemoryCleaner.Langs.MessageBox;
 using MemoryCleaner.Pages;
-using MemoryCleaner.Langs.MainWindow;
+using MemoryCleaner.Langs.Windows.MainWindow;
 using MemoryCleaner.Lib;
 using System.Windows.Threading;
 using HKW.TomlParse;
@@ -35,7 +35,7 @@ namespace MemoryCleaner.Windows
     public partial class MainWindow : Window
     {
         MainPage mainPage = null!;
-        TaskbarIcon tbi = new();
+        TaskbarIcon raskbarIcon = new();
         MenuItem NotifyIcon_Run = new();
         MenuItem NotifyIcon_Show = new();
         MenuItem NotifyIcon_Close = new();
@@ -46,9 +46,8 @@ namespace MemoryCleaner.Windows
             SetMainPage();
             InitializeComponent();
             WindowAccent.SetBlurBehind(this, Color.FromArgb(64, 0, 0, 0));
-            InterfaceInitialize();
-            NotifyIconButtonInitialize();
-            NotifyIconInitialize();
+            DisplayInitialisation();
+            InitializeNotifyIcon();
             AutoMinimizedAndStart();
         }
 
@@ -78,8 +77,7 @@ namespace MemoryCleaner.Windows
         //关闭
         private void Button_TitleClose_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show(MessageBoxText_I18n.ConfirmExit, MessageBoxCaption_I18n.Warn, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                CloseProgram();
+            CloseProgram();
         }
     }
 }

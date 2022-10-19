@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MemoryCleaner.Langs.MessageBox {
+namespace MemoryCleaner.Langs.NotifyIcon {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace MemoryCleaner.Langs.MessageBox {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class MessageBoxText_I18n {
+    internal class NotifyIcon_I18n {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal MessageBoxText_I18n() {
+        internal NotifyIcon_I18n() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace MemoryCleaner.Langs.MessageBox {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MemoryCleaner.Langs.MessageBox.MessageBoxText_I18n", typeof(MessageBoxText_I18n).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MemoryCleaner.Langs.NotifyIcon.NotifyIcon_I18n", typeof(NotifyIcon_I18n).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,29 +61,29 @@ namespace MemoryCleaner.Langs.MessageBox {
         }
         
         /// <summary>
-        ///   查找类似 ConfigLoadingError 的本地化字符串。
+        ///   查找类似 Close 的本地化字符串。
         /// </summary>
-        internal static string ConfigLoadingError {
+        internal static string Close {
             get {
-                return ResourceManager.GetString("ConfigLoadingError", resourceCulture);
+                return ResourceManager.GetString("Close", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 ConfirmExit 的本地化字符串。
+        ///   查找类似 Run 的本地化字符串。
         /// </summary>
-        internal static string ConfirmExit {
+        internal static string Run {
             get {
-                return ResourceManager.GetString("ConfirmExit", resourceCulture);
+                return ResourceManager.GetString("Run", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 SwitchLanguage 的本地化字符串。
+        ///   查找类似 Show 的本地化字符串。
         /// </summary>
-        internal static string SwitchLanguage {
+        internal static string Show {
             get {
-                return ResourceManager.GetString("SwitchLanguage", resourceCulture);
+                return ResourceManager.GetString("Show", resourceCulture);
             }
         }
     }

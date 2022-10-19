@@ -117,13 +117,82 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConfigLoadingError" xml:space="preserve">
-    <value>ConfigLoadingError</value>
+  <data name="AutoMinimizedAndStart" xml:space="preserve">
+    <value>Auto minimize and start</value>
   </data>
-  <data name="ConfirmExit" xml:space="preserve">
-    <value>ConfirmExit</value>
+  <data name="EmptyModifiedPageList" xml:space="preserve">
+    <value>Empty odified Page List</value>
   </data>
-  <data name="SwitchLanguage" xml:space="preserve">
-    <value>SwitchLanguage</value>
+  <data name="EmptyModifiedPageListTip" xml:space="preserve">
+    <value>EmptyModifiedPageListTip</value>
+  </data>
+  <data name="EmptyPrioity0StandbyList" xml:space="preserve">
+    <value>Empty Prioity 0 Standby List</value>
+  </data>
+  <data name="EmptyPrioity0StandbyListTip" xml:space="preserve">
+    <value>EmptyPrioity0StandbyListTip</value>
+  </data>
+  <data name="EmptyStandbyList" xml:space="preserve">
+    <value>Empty Standby List</value>
+  </data>
+  <data name="EmptyStandbyListTip" xml:space="preserve">
+    <value>EmptyStandbyListTip</value>
+  </data>
+  <data name="EmptySystemWorkingSets" xml:space="preserve">
+    <value>Empty System Working Sets</value>
+  </data>
+  <data name="EmptySystemWorkingSetsTip" xml:space="preserve">
+    <value>EmptySystemWorkingSetsTip</value>
+  </data>
+  <data name="EmptyWorkingSets" xml:space="preserve">
+    <value>Empty Working Sets</value>
+  </data>
+  <data name="EmptyWorkingSetsTip" xml:space="preserve">
+    <value>EmptyWorkingSetsTip</value>
+  </data>
+  <data name="ExecuteNow" xml:space="preserve">
+    <value>Execute Now</value>
+  </data>
+  <data name="FreeMemory" xml:space="preserve">
+    <value>FreeMemory:</value>
+  </data>
+  <data name="LanuchOnUserLogon" xml:space="preserve">
+    <value>Lanuch on user logon</value>
+  </data>
+  <data name="MemoryMetrics" xml:space="preserve">
+    <value>MemoryMetrics</value>
+  </data>
+  <data name="ModeSwitch" xml:space="preserve">
+    <value>Switch</value>
+  </data>
+  <data name="NoCurrentTasks" xml:space="preserve">
+    <value>No current tasks</value>
+  </data>
+  <data name="ProgramTasks" xml:space="preserve">
+    <value>ProgramTasks</value>
+  </data>
+  <data name="RammapMode" xml:space="preserve">
+    <value>RammapMode</value>
+  </data>
+  <data name="ResidualMode" xml:space="preserve">
+    <value>Residual Mode</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="TimeMode" xml:space="preserve">
+    <value>TimeMode</value>
+  </data>
+  <data name="TotalSystemMemory" xml:space="preserve">
+    <value>Total system memory:</value>
+  </data>
+  <data name="UsedMemory" xml:space="preserve">
+    <value>Used memory:</value>
   </data>
 </root>

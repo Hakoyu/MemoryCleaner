@@ -4,15 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MemoryCleaner"
-        xmlns:I18n="clr-namespace:MemoryCleaner.Langs.MainWindow"
-
+        xmlns:I18n="clr-namespace:MemoryCleaner.Langs.Windows.MainWindow"
         mc:Ignorable="d"
-        Title="MemoryCleaner" Height="450" Width="700" ResizeMode="CanMinimize" WindowStyle="None" WindowStartupLocation="CenterScreen" Background="#33000000">
+        Title="MemoryCleaner" Height="450" Width="700" ResizeMode="CanMinimize" WindowStyle="None" WindowStartupLocation="CenterScreen" Background="#33FFFFFF">
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="-1"/>
     </WindowChrome.WindowChrome>
     <Grid WindowChrome.IsHitTestVisibleInChrome="True">
-        <Grid x:Name="Grid_TitleBar" VerticalAlignment="Top" Height="30" MouseLeftButtonDown="Grid_TitleBar_MouseLeftButtonDown" Background="#4C949494">
+        <Grid x:Name="Grid_TitleBar" VerticalAlignment="Top" Height="30" MouseLeftButtonDown="Grid_TitleBar_MouseLeftButtonDown" Background="#4CFFFFFF">
             <Image x:Name="Image_Title" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="20" Source="/Resources/recycling.ico" Margin="5,5,0,0"/>
             <Label x:Name="Label_Title" Content="{x:Static I18n:MainWindow_I18n.MemoryCleaner}" HorizontalAlignment="Stretch" Margin="30,0,90,0" VerticalAlignment="Stretch" Padding="0,0,0,0" VerticalContentAlignment="Center"/>
             <Button x:Name="Button_TitleMin" Content="➖" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" Width="30" Height="30" BorderBrush="{x:Null}" FontSize="16" Margin="0,0,60,0" Click="Button_TitleMin_Click"/>

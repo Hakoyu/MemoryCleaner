@@ -124,4 +124,7 @@ Will restore default config</value>
   <data name="ConfirmExit" xml:space="preserve">
     <value>Confirm exit?</value>
   </data>
+  <data name="SwitchLanguage" xml:space="preserve">
+    <value>Confirm switch to</value>
+  </data>
 </root>

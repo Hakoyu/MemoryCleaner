@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MemoryCleaner.Langs.MessageBox {
+namespace MemoryCleaner.Langs.Pages.ResidualModePage {
     using System;
     
     
@@ -22,24 +22,24 @@ namespace MemoryCleaner.Langs.MessageBox {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class MessageBoxText_I18n {
+    public class ResidualModePage_I18n {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal MessageBoxText_I18n() {
+        internal ResidualModePage_I18n() {
         }
         
         /// <summary>
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MemoryCleaner.Langs.MessageBox.MessageBoxText_I18n", typeof(MessageBoxText_I18n).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MemoryCleaner.Langs.Pages.ResidualModePage.ResidualModePage_I18n", typeof(ResidualModePage_I18n).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace MemoryCleaner.Langs.MessageBox {
         ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,29 +61,29 @@ namespace MemoryCleaner.Langs.MessageBox {
         }
         
         /// <summary>
-        ///   查找类似 ConfigLoadingError 的本地化字符串。
+        ///   查找类似 FreeMemoryLower 的本地化字符串。
         /// </summary>
-        internal static string ConfigLoadingError {
+        public static string FreeMemoryLower {
             get {
-                return ResourceManager.GetString("ConfigLoadingError", resourceCulture);
+                return ResourceManager.GetString("FreeMemoryLower", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 ConfirmExit 的本地化字符串。
+        ///   查找类似 MinimumInterval 的本地化字符串。
         /// </summary>
-        internal static string ConfirmExit {
+        public static string MinimumInterval {
             get {
-                return ResourceManager.GetString("ConfirmExit", resourceCulture);
+                return ResourceManager.GetString("MinimumInterval", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 SwitchLanguage 的本地化字符串。
+        ///   查找类似 UsedMemoryMore 的本地化字符串。
         /// </summary>
-        internal static string SwitchLanguage {
+        public static string UsedMemoryMore {
             get {
-                return ResourceManager.GetString("SwitchLanguage", resourceCulture);
+                return ResourceManager.GetString("UsedMemoryMore", resourceCulture);
             }
         }
     }

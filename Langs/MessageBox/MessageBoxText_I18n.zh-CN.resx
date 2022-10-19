@@ -124,4 +124,7 @@
   <data name="ConfirmExit" xml:space="preserve">
     <value>确认退出?</value>
   </data>
+  <data name="SwitchLanguage" xml:space="preserve">
+    <value>确认切换为</value>
+  </data>
 </root>

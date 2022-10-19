@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConfigLoadingError" xml:space="preserve">
-    <value>ConfigLoadingError</value>
+  <data name="FreeMemoryLower" xml:space="preserve">
+    <value>剩余内存低于:</value>
   </data>
-  <data name="ConfirmExit" xml:space="preserve">
-    <value>ConfirmExit</value>
+  <data name="MinimumInterval" xml:space="preserve">
+    <value>最小运行间隔时间:</value>
   </data>
-  <data name="SwitchLanguage" xml:space="preserve">
-    <value>SwitchLanguage</value>
+  <data name="UsedMemoryMore" xml:space="preserve">
+    <value>已使用内存高于:</value>
   </data>
 </root>

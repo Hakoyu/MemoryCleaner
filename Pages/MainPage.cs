@@ -26,12 +26,43 @@ using System.Windows.Resources;
 using System.Runtime.CompilerServices;
 using MemoryCleaner.Lib;
 using MemoryCleaner.Langs.MessageBox;
+using MemoryCleaner.Langs.Pages.MainPage;
 
 namespace MemoryCleaner.Pages
 {
     public partial class MainPage
     {
         Thread rammpRun = null!;
+        public delegate void MainPageEvent();
+        public MainPageEvent ChangeI18n = null!;
+        public MainPageEvent ConfigLoadError = null!;
+
+        void BeforeInitialisation()
+        {
+            taskModeList.AddLast(new KeyValuePair<string, object>(MainPage_I18n.ResidualMode, residualMode));
+            taskModeList.AddLast(new KeyValuePair<string, object>(MainPage_I18n.TimeMode, timeMode));
+            currentMode = taskModeList.First!;
+            Global.totalMemory = management.GetMemoryMetrics()!.Total;
+        }
+        void AfterInitialisation()
+        {
+            foreach (ComboBoxItem item in ComboBox_I18n.Items)
+                i18nItems.Add(item.ToolTip.ToString()!, item);
+            ComboBox_I18n.SelectedItem = i18nItems[Thread.CurrentThread.CurrentUICulture.Name];
+
+            rammapMode.Add(RammapMode.EmptyWorkingSets, CheckBox_EmptyWorkingSets);
+            rammapMode.Add(RammapMode.EmptySystemWorkingSets, CheckBox_EmptySystemWorkingSets);
+            rammapMode.Add(RammapMode.EmptyModifiedPageList, CheckBox_EmptyModifiedPageList);
+            rammapMode.Add(RammapMode.EmptyStandbyList, CheckBox_EmptyStandbyList);
+            rammapMode.Add(RammapMode.EmptyPrioity0StandbyList, CheckBox_EmptyPrioity0StandbyList);
+
+            Progressbar_MemoryMetrics.Maximum = Global.totalMemory;
+            TextBox_TotalMemory.Text = Global.totalMemory.ToString();
+            SetTimerGetMemoryMetrics();
+            residualTask = new Thread(ResidualTaskTimer);
+            timeTask = new Thread(TimeTaskTimer);
+            rammpRun = new Thread(RammpRun);
+        }
         void ConfigInitialize()
         {
             if (Global.CreateConfigFile())
@@ -45,10 +76,10 @@ namespace MemoryCleaner.Pages
                     CheckBox_EmptyStandbyList.IsChecked = toml["RammapMode"]["EmptyStandbyList"].AsBoolean;
                     CheckBox_EmptyPrioity0StandbyList.IsChecked = toml["RammapMode"]["EmptyPrioity0StandbyList"].AsBoolean;
 
-                    while (currentMode.Value.GetType().Name != toml["TaskMode"]["Mode"].AsString)
+                    while (!currentMode.Value.Value.GetType().Name.Contains(toml["TaskMode"]["Mode"].AsString))
                         currentMode = currentMode.Next!;
-                    Frame_ModeSwitch.Content = currentMode.Value;
-                    Label_ModeSwitch.Content = toml["TaskMode"]["Mode"].AsString;
+                    Frame_ModeSwitch.Content = currentMode.Value.Value;
+                    Label_ModeSwitch.Content = currentMode.Value.Key;
 
                     residualMode.CheckBox_UsedMemoryMore.IsChecked = toml["ResidualMode"]["UsedMemoryMore"].AsBoolean;
                     residualMode.TextBox_UsedMemoryMoreSize.Text =
@@ -68,6 +99,8 @@ namespace MemoryCleaner.Pages
                 }
                 catch
                 {
+                    management.Close();
+                    StopTask();
                     ConfigLoadError();
                 }
             }
@@ -103,7 +136,7 @@ namespace MemoryCleaner.Pages
                 toml["RammapMode"]["EmptyStandbyList"] = CheckBox_EmptyStandbyList.IsChecked!;
                 toml["RammapMode"]["EmptyPrioity0StandbyList"] = CheckBox_EmptyPrioity0StandbyList.IsChecked!;
 
-                toml["TaskMode"]["Mode"] = currentMode.Value.GetType().Name;
+                toml["TaskMode"]["Mode"] = currentMode.Value.Value.GetType().Name.Replace("Page", "");
 
                 toml["ResidualMode"]["UsedMemoryMore"] = residualMode.CheckBox_UsedMemoryMore.IsChecked!;
                 toml["ResidualMode"]["UsedMemoryMoreSize"] = int.Parse(residualMode.TextBox_UsedMemoryMoreSize.Text);
@@ -121,25 +154,10 @@ namespace MemoryCleaner.Pages
             }
             catch
             {
+                management.Close();
+                StopTask();
                 ConfigLoadError();
             }
-        }
-        void InterfaceInitialize()
-        {
-            foreach (ComboBoxItem item in ComboBox_I18n.Items)
-            {
-                if (item.ToolTip.ToString() == Thread.CurrentThread.CurrentUICulture.Name)
-                {
-                    ComboBox_I18n.SelectedItem = item;
-                    break;
-                }
-            }
-            Progressbar_MemoryMetrics.Maximum = Global.totalMemory;
-            TextBox_TotalMemory.Text = Global.totalMemory.ToString();
-            SetTimerGetMemoryMetrics();
-            residualTask = new Thread(ResidualTaskTimer);
-            timeTask = new Thread(TimeTaskTimer);
-            rammpRun = new Thread(RammpRun);
         }
         void SetTimerGetMemoryMetrics()
         {
@@ -189,18 +207,19 @@ namespace MemoryCleaner.Pages
             foreach (var mode in rammapMode)
                 if (Dispatcher.Invoke(() => ((CheckBox)mode.Value).IsChecked is true))
                     RammapRunnerRun(mode.Key);
-            Dispatcher.Invoke(() => Label_TaskProgressInfo.Content = "Success");
+            Dispatcher.Invoke(() => Label_TaskProgressInfo.Content = MainPage_I18n.Success);
             Thread.Sleep(3000);
             Dispatcher.Invoke(() =>
             {
                 Progressbar_TaskProgress.Value = 0;
-                Label_TaskProgressInfo.Content = "No current tasks";
+                Label_TaskProgressInfo.Content = MainPage_I18n.NoCurrentTasks;
                 GroupBox_RammapMode.IsEnabled = true;
             });
+
             void RammapRunnerRun(RammapMode mode)
             {
                 RammapRunner.Run(mode);
-                Dispatcher.Invoke(() => Label_TaskProgressInfo.Content = mode.ToString());
+                Dispatcher.Invoke(() => Label_TaskProgressInfo.Content = modeContent[mode]);
                 Thread.Sleep(3000);
             }
         }
@@ -232,12 +251,12 @@ namespace MemoryCleaner.Pages
             Button_StartTask.IsEnabled = false;
             Button_StopTask.IsEnabled = true;
             Button_ModeSwitch.IsEnabled = false;
-            if (Frame_ModeSwitch.Content is ResidualMode)
+            if (Frame_ModeSwitch.Content is ResidualModePage)
             {
                 residualMode.IsEnabled = false;
                 residualTask.Start();
             }
-            else if (Frame_ModeSwitch.Content is TimeMode)
+            else if (Frame_ModeSwitch.Content is TimeModePage)
             {
                 timeMode.TextBox_IntervalTime.IsEnabled = false;
                 timeTask.Start();
@@ -248,14 +267,14 @@ namespace MemoryCleaner.Pages
             Button_StopTask.IsEnabled = false;
             Button_StartTask.IsEnabled = true;
             Button_ModeSwitch.IsEnabled = true;
-            if (Frame_ModeSwitch.Content is ResidualMode)
+            if (Frame_ModeSwitch.Content is ResidualModePage)
             {
                 residualMode.IsEnabled = true;
                 if (residualTask.ThreadState != ThreadState.Unstarted)
                     residualTask.Join(1);
                 residualTask = new Thread(ResidualTaskTimer);
             }
-            else if (Frame_ModeSwitch.Content is TimeMode)
+            else if (Frame_ModeSwitch.Content is TimeModePage)
             {
                 timeMode.TextBox_IntervalTime.IsEnabled = true;
                 if (timeTask.ThreadState != ThreadState.Unstarted)
@@ -268,10 +287,5 @@ namespace MemoryCleaner.Pages
                 });
             }
         }
-        public delegate void ChangeI18nEvent();
-        public ChangeI18nEvent ChangeI18n = null!;
-
-        public delegate void ConfigLoadErrorEvent();
-        public ConfigLoadErrorEvent ConfigLoadError = null!;
     }
 }

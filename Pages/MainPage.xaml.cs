@@ -25,6 +25,7 @@ using System.Windows.Resources;
 using System.Globalization;
 using MemoryCleaner.Langs.MessageBox;
 using MemoryCleaner.Lib;
+using MemoryCleaner.Langs.Pages.MainPage;
 
 namespace MemoryCleaner.Pages
 {
@@ -37,28 +38,28 @@ namespace MemoryCleaner.Pages
         Management management = new();
         int rammapModeCheckedSize = 0;
         DispatcherTimer timerGetMemoryMetrics = new();
-        ResidualMode residualMode = new();
+        ResidualModePage residualMode = new();
         Thread residualTask = null!;
-        TimeMode timeMode = new();
+        TimeModePage timeMode = new();
         Thread timeTask = null!;
-        LinkedList<object> taskMode = new();
-        LinkedListNode<object> currentMode = null!;
+        LinkedList<KeyValuePair<string, object>> taskModeList = new();
+        LinkedListNode<KeyValuePair<string, object>> currentMode = null!;
         Dictionary<RammapMode, object> rammapMode = new();
+        Dictionary<RammapMode, string> modeContent = new()
+        {
+            { RammapMode.EmptyWorkingSets, MainPage_I18n.EmptyWorkingSets },
+            { RammapMode.EmptySystemWorkingSets, MainPage_I18n.EmptySystemWorkingSets },
+            { RammapMode.EmptyModifiedPageList, MainPage_I18n.EmptyModifiedPageList },
+            { RammapMode.EmptyStandbyList, MainPage_I18n.EmptyStandbyList },
+            { RammapMode.EmptyPrioity0StandbyList, MainPage_I18n.EmptyPrioity0StandbyList }
+        };
+        Dictionary<string, ComboBoxItem> i18nItems = new();
         bool isFirst = true;
         public MainPage()
         {
-            taskMode.AddLast(timeMode);
-            taskMode.AddLast(residualMode);
-            currentMode = taskMode.First!;
-            //DateInitialize();
-            Global.totalMemory = management.GetMemoryMetrics()!.Total;
+            BeforeInitialisation();
             InitializeComponent();
-            rammapMode.Add(RammapMode.EmptyWorkingSets, CheckBox_EmptyWorkingSets);
-            rammapMode.Add(RammapMode.EmptySystemWorkingSets, CheckBox_EmptySystemWorkingSets);
-            rammapMode.Add(RammapMode.EmptyModifiedPageList, CheckBox_EmptyModifiedPageList);
-            rammapMode.Add(RammapMode.EmptyStandbyList, CheckBox_EmptyStandbyList);
-            rammapMode.Add(RammapMode.EmptyPrioity0StandbyList, CheckBox_EmptyPrioity0StandbyList);
-            InterfaceInitialize();
+            AfterInitialisation();
             ConfigInitialize();
             GetRammapModeCheckedSize();
         }
@@ -126,7 +127,7 @@ namespace MemoryCleaner.Pages
             Windows.InfoWindow infoWindow = new();
             infoWindow.ShowDialog();
         }
-        
+
         private void ComboBox_I18n_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (isFirst)
@@ -134,20 +135,23 @@ namespace MemoryCleaner.Pages
                 isFirst = false;
                 return;
             }
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo((ComboBox_I18n.SelectedItem as ComboBoxItem)!.ToolTip.ToString()!);
-            if (MessageBox.Show("Confirmation of changes?", MessageBoxCaption_I18n.Warn, MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+            ComboBoxItem oldItem = i18nItems[Thread.CurrentThread.CurrentUICulture.Name];
+            ComboBoxItem item = (ComboBoxItem)ComboBox_I18n.SelectedItem;
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(item.ToolTip.ToString()!);
+            if (MessageBox.Show($"{MessageBoxText_I18n.SwitchLanguage} {item.Content} ?", MessageBoxCaption_I18n.Warn, MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
             {
-                SaveConfig();
+                Close();
                 ChangeI18n();
-                //Close();
-                //System.Windows.Forms.Application.Restart();
-                //Application.Current.Shutdown(-1);
+                return;
             }
+            isFirst = true;
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(oldItem.ToolTip.ToString()!);
+            ComboBox_I18n.SelectedItem = oldItem;
         }
         private void Button_ModeSwitch_Click(object sender, RoutedEventArgs e)
         {
-            Frame_ModeSwitch.Content = (currentMode = currentMode.Next ?? taskMode.First!).Value;
-            Label_ModeSwitch.Content = currentMode.Value.GetType().Name;
+            Frame_ModeSwitch.Content = (currentMode = currentMode.Next ?? taskModeList.First!).Value.Value;
+            Label_ModeSwitch.Content = currentMode.Value.Key;
             new Thread(() =>
             {
                 Dispatcher.Invoke(() => Button_ModeSwitch.IsEnabled = false);

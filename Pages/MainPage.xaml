@@ -3,20 +3,20 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:I18n="clr-namespace:MemoryCleaner.Langs.MainPage"
+      xmlns:I18n="clr-namespace:MemoryCleaner.Langs.Pages.MainPage"
       xmlns:local="clr-namespace:MemoryCleaner"
       mc:Ignorable="d" 
       d:DesignHeight="420" d:DesignWidth="700"
       Title="MainPage">
     <Grid Background="#33FFFFFF" MouseDown="Grid_MouseDown">
-        <GroupBox Header="MemoryMetrics" Margin="10,10,0,0" Width="400" Height="150" BorderBrush="#FFD5DFE5" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <GroupBox Header="{x:Static I18n:MainPage_I18n.MemoryMetrics}" Margin="10,10,0,0" Width="400" Height="150" BorderBrush="#FFD5DFE5" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Grid>
                 <Label x:Name="Label_TotalSystemMemory" Content="{x:Static I18n:MainPage_I18n.TotalSystemMemory}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="180" Height="30" VerticalContentAlignment="Center" FontSize="16"/>
                 <TextBox x:Name="TextBox_TotalMemory" HorizontalAlignment="Left" Margin="220,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" Height="30" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16" IsReadOnly="True" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False"/>
-                <Label x:Name="Label_FreeMemory" Content="Free memory:" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="180" Height="30" VerticalContentAlignment="Center" FontSize="16"/>
-                <TextBox x:Name="TextBox_FreeMemory" Margin="220,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" HorizontalAlignment="Left" Width="60" FontSize="16" IsReadOnly="True" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" TextChanged="TextBox_FreeMemory_TextChanged"/>
+                <Label x:Name="Label_UsedMemory" Content="{x:Static I18n:MainPage_I18n.UsedMemory}" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="180" Height="30" FontSize="16"/>
                 <TextBox x:Name="TextBox_UsedMemory" HorizontalAlignment="Left" Height="30" Margin="220,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" FontSize="16" IsReadOnly="True" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" TextChanged="TextBox_UsedMemory_TextChanged"/>
-                <Label x:Name="Label_UsedMemory" Content="Used memory:" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="180" Height="30" FontSize="16"/>
+                <Label x:Name="Label_FreeMemory" Content="{x:Static I18n:MainPage_I18n.FreeMemory}" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="180" Height="30" VerticalContentAlignment="Center" FontSize="16"/>
+                <TextBox x:Name="TextBox_FreeMemory" Margin="220,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" HorizontalAlignment="Left" Width="60" FontSize="16" IsReadOnly="True" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" TextChanged="TextBox_FreeMemory_TextChanged"/>
                 <ProgressBar x:Name="Progressbar_MemoryMetrics" Margin="0,10,10,10" Width="40" HorizontalAlignment="Right" Maximum="4096" Orientation="Vertical" Value="1024"/>
                 <Label x:Name="Label_MemoryMetrics" Content="0%" HorizontalAlignment="Right" Margin="0,10,10,10" VerticalAlignment="Stretch" Width="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                 <Label Content="MB" HorizontalAlignment="Left" Margin="280,10,0,0" VerticalAlignment="Top" Width="40" Height="30" VerticalContentAlignment="Center" FontSize="16"/>
@@ -24,30 +24,30 @@
                 <Label Content="MB" HorizontalAlignment="Left" Margin="280,90,0,0" VerticalAlignment="Top" Width="40" Height="30" VerticalContentAlignment="Center" FontSize="16"/>
             </Grid>
         </GroupBox>
-        <GroupBox x:Name="GroupBox_RammapMode" Header="RammapMode" Margin="0,10,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="290" Width="270">
+        <GroupBox x:Name="GroupBox_RammapMode" Header="{x:Static I18n:MainPage_I18n.RammapMode}" Margin="0,10,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="290" Width="270">
             <Grid>
-                <CheckBox x:Name="CheckBox_EmptyWorkingSets" Content="Empty working sets" HorizontalAlignment="Stretch" Margin="10,10,10,0" VerticalAlignment="Top" FontSize="16" VerticalContentAlignment="Center" Height="30" IsChecked="True" Click="RammapModeStateChanges"/>
-                <CheckBox x:Name="CheckBox_EmptySystemWorkingSets" Content="Empty system working sets" HorizontalAlignment="Stretch" Margin="10,50,10,0" VerticalAlignment="Top" FontSize="16" VerticalContentAlignment="Center" Height="30" Click="RammapModeStateChanges"/>
-                <CheckBox x:Name="CheckBox_EmptyModifiedPageList" Content="Empty modified page list" HorizontalAlignment="Stretch" Margin="10,90,10,0" VerticalAlignment="Top" FontSize="16" VerticalContentAlignment="Center" Height="30" Click="RammapModeStateChanges"/>
-                <CheckBox x:Name="CheckBox_EmptyStandbyList" Content="Empty standby list" HorizontalAlignment="Stretch" Margin="10,130,10,0" VerticalAlignment="Top" FontSize="16" VerticalContentAlignment="Center" Height="30" IsChecked="True" Click="RammapModeStateChanges"/>
-                <CheckBox x:Name="CheckBox_EmptyPrioity0StandbyList" Content="Empty prioity 0 standby list" HorizontalAlignment="Stretch" Margin="10,170,10,0" VerticalAlignment="Top" FontSize="16" VerticalContentAlignment="Center" Height="30" Click="RammapModeStateChanges"/>
-                <Button x:Name="Button_ExecuteNow" Content="Execute Now" Margin="10,210,10,0" FontSize="16" VerticalAlignment="Top" Height="50" Click="Button_ExecuteNow_Click"/>
+                <CheckBox x:Name="CheckBox_EmptyWorkingSets" Content="{x:Static I18n:MainPage_I18n.EmptyWorkingSets}" HorizontalAlignment="Stretch" Margin="10,10,10,0" VerticalAlignment="Top" FontSize="16" VerticalContentAlignment="Center" Height="30" IsChecked="True" Click="RammapModeStateChanges"/>
+                <CheckBox x:Name="CheckBox_EmptySystemWorkingSets" Content="{x:Static I18n:MainPage_I18n.EmptySystemWorkingSets}" HorizontalAlignment="Stretch" Margin="10,50,10,0" VerticalAlignment="Top" FontSize="16" VerticalContentAlignment="Center" Height="30" Click="RammapModeStateChanges"/>
+                <CheckBox x:Name="CheckBox_EmptyModifiedPageList" Content="{x:Static I18n:MainPage_I18n.EmptyModifiedPageList}" HorizontalAlignment="Stretch" Margin="10,90,10,0" VerticalAlignment="Top" FontSize="16" VerticalContentAlignment="Center" Height="30" Click="RammapModeStateChanges"/>
+                <CheckBox x:Name="CheckBox_EmptyStandbyList" Content="{x:Static I18n:MainPage_I18n.EmptyStandbyList}" HorizontalAlignment="Stretch" Margin="10,130,10,0" VerticalAlignment="Top" FontSize="16" VerticalContentAlignment="Center" Height="30" IsChecked="True" Click="RammapModeStateChanges"/>
+                <CheckBox x:Name="CheckBox_EmptyPrioity0StandbyList" Content="{x:Static I18n:MainPage_I18n.EmptyPrioity0StandbyList}" HorizontalAlignment="Stretch" Margin="10,170,10,0" VerticalAlignment="Top" FontSize="16" VerticalContentAlignment="Center" Height="30" Click="RammapModeStateChanges"/>
+                <Button x:Name="Button_ExecuteNow" Content="{x:Static I18n:MainPage_I18n.ExecuteNow}" Margin="10,210,10,0" FontSize="16" VerticalAlignment="Top" Height="50" Click="Button_ExecuteNow_Click"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="ProgramTasks" Margin="10,170,0,0" Height="190" Width="400" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <GroupBox Header="{x:Static I18n:MainPage_I18n.ProgramTasks}" Margin="10,170,0,0" Height="190" Width="400" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Grid>
                 <Frame x:Name="Frame_ModeSwitch" Margin="0,0,0,50" Height="120" NavigationUIVisibility="Hidden"/>
 
-                <Button x:Name="Button_ModeSwitch" Content="Switch" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Height="30" Width="60" FontSize="16" Click="Button_ModeSwitch_Click"/>
-                <Label x:Name="Label_ModeSwitch" Content="Residual Mode" HorizontalAlignment="Left" Margin="80,0,0,10" VerticalAlignment="Bottom" Height="30" Width="120" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Padding="0,0,0,0"/>
-                <Button x:Name="Button_StopTask" Content="Stop" Margin="0,0,100,10" VerticalAlignment="Bottom" Height="30" FontSize="16" IsEnabled="False" Click="Button_StopTask_Click" HorizontalAlignment="Right" Width="80"/>
-                <Button x:Name="Button_StartTask" Content="Start" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="80" Height="30" FontSize="16" HorizontalContentAlignment="Center" Click="Button_StartTask_Click"/>
+                <Button x:Name="Button_ModeSwitch" Content="{x:Static I18n:MainPage_I18n.ModeSwitch}" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Height="30" Width="60" FontSize="16" Click="Button_ModeSwitch_Click"/>
+                <Label x:Name="Label_ModeSwitch" Content="ResidualMode" HorizontalAlignment="Left" Margin="80,0,0,10" VerticalAlignment="Bottom" Height="30" Width="120" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Padding="0,0,0,0" Background="#33FFFFFF"/>
+                <Button x:Name="Button_StopTask" Content="{x:Static I18n:MainPage_I18n.Stop}" Margin="0,0,100,10" VerticalAlignment="Bottom" Height="30" FontSize="16" IsEnabled="False" Click="Button_StopTask_Click" HorizontalAlignment="Right" Width="80"/>
+                <Button x:Name="Button_StartTask" Content="{x:Static I18n:MainPage_I18n.Start}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="80" Height="30" FontSize="16" HorizontalContentAlignment="Center" Click="Button_StartTask_Click"/>
             </Grid>
         </GroupBox>
-        <CheckBox x:Name="CheckBox_AutoMinimizedAndStart" Content="Auto-minimize and start" HorizontalAlignment="Left" Margin="10,370,0,0" VerticalAlignment="Top" Height="20" VerticalContentAlignment="Center"/>
-        <CheckBox x:Name="CheckBox_LanuchOnUserLogon" Content="Lanuch on user logon" HorizontalAlignment="Left" Margin="10,390,0,0" VerticalAlignment="Top" Height="20" VerticalContentAlignment="Center" Click="CheckBox_LanuchOnUserLogon_Click"/>
+        <CheckBox x:Name="CheckBox_AutoMinimizedAndStart" Content="{x:Static I18n:MainPage_I18n.AutoMinimizedAndStart}" HorizontalAlignment="Left" Margin="10,370,0,0" VerticalAlignment="Top" Height="20" VerticalContentAlignment="Center"/>
+        <CheckBox x:Name="CheckBox_LanuchOnUserLogon" Content="{x:Static I18n:MainPage_I18n.LanuchOnUserLogon}" HorizontalAlignment="Left" Margin="10,390,0,0" VerticalAlignment="Top" Height="20" VerticalContentAlignment="Center" Click="CheckBox_LanuchOnUserLogon_Click"/>
         <ProgressBar x:Name="Progressbar_TaskProgress" HorizontalAlignment="Right" Height="50" Margin="0,310,10,0" VerticalAlignment="Top" Width="270" Maximum="5"/>
-        <Label x:Name="Label_TaskProgressInfo" Content="No current tasks" Margin="0,310,10,0" VerticalAlignment="Top" Height="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Width="270" FontSize="16"/>
+        <Label x:Name="Label_TaskProgressInfo" Content="{x:Static I18n:MainPage_I18n.NoCurrentTasks}" Margin="0,310,10,0" VerticalAlignment="Top" Height="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Width="270" FontSize="16"/>
         <Button x:Name="Button_Help" Content="❓" HorizontalAlignment="Right" Margin="0,370,10,0" VerticalAlignment="Top" Width="40" Height="40" FontSize="24"/>
         <Button x:Name="Button_Info" Content="❗" HorizontalAlignment="Right" Margin="0,370,70,0" VerticalAlignment="Top" Width="40" Height="40" FontSize="24" Click="Button_Info_Click"/>
         <ComboBox x:Name="ComboBox_I18n" HorizontalAlignment="Left" Margin="420,375,0,0" VerticalAlignment="Top" Width="120" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,3,0,3" FontSize="16" SelectionChanged="ComboBox_I18n_SelectionChanged">
