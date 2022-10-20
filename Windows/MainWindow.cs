@@ -15,6 +15,7 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Threading;
 using System.IO;
+using System.Drawing;
 
 namespace MemoryCleaner.Windows
 {
@@ -44,6 +45,8 @@ namespace MemoryCleaner.Windows
             mainPage = new();
             mainPage.ChangeI18n += ChangeI18n;
             mainPage.ConfigLoadError += ConfigLoadError;
+            mainPage.SetBlurEffect += SetBlurEffect;
+            mainPage.RemoveBlurEffect += RemoveBlurEffect;
             GC.Collect();
         }
         void ChangeI18n()
@@ -55,10 +58,12 @@ namespace MemoryCleaner.Windows
         }
         void ConfigLoadError()
         {
+            SetBlurEffect();
             MessageBox.Show(MessageBoxText_I18n.ConfigLoadingError, MessageBoxCaption_I18n.Warn, MessageBoxButton.OK);
             File.Delete(Global.configPath);
             Global.CreateConfigFile();
             SaveI18n2Config();
+            RemoveBlurEffect();
         }
         static void SaveI18n2Config()
         {
@@ -106,11 +111,21 @@ namespace MemoryCleaner.Windows
         }
         private void CloseProgram()
         {
-            if (MessageBox.Show(MessageBoxText_I18n.ConfirmExit, MessageBoxCaption_I18n.Warn, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            Effect = new System.Windows.Media.Effects.BlurEffect();
+            if (MessageBox.Show(this, MessageBoxText_I18n.ConfirmExit, MessageBoxCaption_I18n.Warn, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 mainPage.Close();
                 Close();
             }
+            Effect = null;
+        }
+        private void SetBlurEffect()
+        {
+            Effect = new System.Windows.Media.Effects.BlurEffect();
+        }
+        private void RemoveBlurEffect()
+        {
+            Effect = null;
         }
     }
 }

@@ -36,11 +36,13 @@ namespace MemoryCleaner.Pages
         public delegate void MainPageEvent();
         public event MainPageEvent ChangeI18n = null!;
         public event MainPageEvent ConfigLoadError = null!;
+        public event MainPageEvent SetBlurEffect = null!;
+        public event MainPageEvent RemoveBlurEffect = null!;
 
         void BeforeInitialisation()
         {
-            taskModeList.AddLast(new KeyValuePair<string, object>(MainPage_I18n.ResidualMode, residualMode));
-            taskModeList.AddLast(new KeyValuePair<string, object>(MainPage_I18n.TimeMode, timeMode));
+            taskModeList.AddLast(value: new(MainPage_I18n.ResidualMode, residualMode));
+            taskModeList.AddLast(value: new(MainPage_I18n.TimeMode, timeMode));
             currentMode = taskModeList.First!;
             Global.totalMemory = management.GetMemoryMetrics()!.Total;
         }

@@ -135,6 +135,7 @@ namespace MemoryCleaner.Pages
                 isFirst = false;
                 return;
             }
+            SetBlurEffect();
             ComboBoxItem oldItem = i18nItems[Thread.CurrentThread.CurrentUICulture.Name];
             ComboBoxItem item = (ComboBoxItem)ComboBox_I18n.SelectedItem;
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(item.ToolTip.ToString()!);
@@ -147,6 +148,7 @@ namespace MemoryCleaner.Pages
             isFirst = true;
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(oldItem.ToolTip.ToString()!);
             ComboBox_I18n.SelectedItem = oldItem;
+            RemoveBlurEffect();
         }
         private void Button_ModeSwitch_Click(object sender, RoutedEventArgs e)
         {
