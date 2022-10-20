@@ -34,10 +34,12 @@ namespace Rammap
         {
             if (!File.Exists(@"RAMMap.exe"))
                 return false;
-            ProcessStartInfo info = new();
-            info.FileName = @"powershell.exe";
-            info.Arguments = @$".\RAMMap.exe {mode.GetDescription()}";
-            info.CreateNoWindow = true;
+            ProcessStartInfo info = new()
+            {
+                FileName = @"powershell.exe",
+                Arguments = @$".\RAMMap.exe {mode.GetDescription()}",
+                CreateNoWindow = true
+            };
             if (Process.Start(info) is Process p)
             {
                 p.WaitForExit();

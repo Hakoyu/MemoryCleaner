@@ -39,7 +39,7 @@
                 <Frame x:Name="Frame_ModeSwitch" Margin="0,0,0,50" Height="120" NavigationUIVisibility="Hidden"/>
 
                 <Button x:Name="Button_ModeSwitch" Content="{x:Static I18n:MainPage_I18n.ModeSwitch}" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Height="30" Width="60" FontSize="16" Click="Button_ModeSwitch_Click"/>
-                <Label x:Name="Label_ModeSwitch" Content="ResidualMode" HorizontalAlignment="Left" Margin="80,0,0,10" VerticalAlignment="Bottom" Height="30" Width="120" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Padding="0,0,0,0" Background="#33FFFFFF"/>
+                <Label x:Name="Label_ModeSwitch" Content="noop" HorizontalAlignment="Left" Margin="80,0,0,10" VerticalAlignment="Bottom" Height="30" Width="120" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Padding="0,0,0,0" Background="#33FFFFFF"/>
                 <Button x:Name="Button_StopTask" Content="{x:Static I18n:MainPage_I18n.Stop}" Margin="0,0,100,10" VerticalAlignment="Bottom" Height="30" FontSize="16" IsEnabled="False" Click="Button_StopTask_Click" HorizontalAlignment="Right" Width="80"/>
                 <Button x:Name="Button_StartTask" Content="{x:Static I18n:MainPage_I18n.Start}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="80" Height="30" FontSize="16" HorizontalContentAlignment="Center" Click="Button_StartTask_Click"/>
             </Grid>
