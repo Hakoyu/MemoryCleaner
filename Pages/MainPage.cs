@@ -61,9 +61,9 @@ namespace MemoryCleaner.Pages
             Progressbar_MemoryMetrics.Maximum = Global.totalMemory;
             TextBox_TotalMemory.Text = Global.totalMemory.ToString();
             SetTimerGetMemoryMetrics();
-            residualTask = new Thread(ResidualTaskTimer);
-            timeTask = new Thread(TimeTaskTimer);
-            rammpRun = new Thread(RammpRun);
+            residualTask = new(ResidualTaskTimer);
+            timeTask = new(TimeTaskTimer);
+            rammpRun = new(RammpRun);
         }
         void ConfigInitialize()
         {
@@ -71,7 +71,7 @@ namespace MemoryCleaner.Pages
             {
                 try
                 {
-                    using TomlTable toml = TOML.Parse(Global.configPath);
+                    TomlTable toml = TOML.Parse(Global.configPath);
                     CheckBox_EmptyWorkingSets.IsChecked = toml["RammapMode"]["EmptyWorkingSets"].AsBoolean;
                     CheckBox_EmptySystemWorkingSets.IsChecked = toml["RammapMode"]["EmptySystemWorkingSets"].AsBoolean;
                     CheckBox_EmptyModifiedPageList.IsChecked = toml["RammapMode"]["EmptyModifiedPageList"].AsBoolean;
@@ -109,10 +109,8 @@ namespace MemoryCleaner.Pages
             if (!File.Exists(Global.rammapPath))
             {
                 using Stream stream = Application.GetResourceStream(Global.resourcesRAMMapUri).Stream;
-                byte[] b = new byte[stream.Length];
-                stream.Read(b, 0, b.Length);
                 using FileStream fs = File.Create(Global.rammapPath);
-                fs.Write(b, 0, b.Length);
+                stream.CopyTo(fs);
             }
         }
         void GetRammapModeCheckedSize()
@@ -123,15 +121,19 @@ namespace MemoryCleaner.Pages
         }
         public void Close()
         {
+            timerGetMemoryMetrics.Stop();
             management.Close();
             StopTask();
             SaveConfig();
+            Frame_ModeSwitch.Content = null!;
+            //residualMode = null!;
+            //timeMode = null!;
         }
         void SaveConfig()
         {
             try
             {
-                using TomlTable toml = TOML.Parse(Global.configPath);
+                TomlTable toml = TOML.Parse(Global.configPath);
                 toml["RammapMode"]["EmptyWorkingSets"] = CheckBox_EmptyWorkingSets.IsChecked!;
                 toml["RammapMode"]["EmptySystemWorkingSets"] = CheckBox_EmptySystemWorkingSets.IsChecked!;
                 toml["RammapMode"]["EmptyModifiedPageList"] = CheckBox_EmptyModifiedPageList.IsChecked!;
@@ -274,14 +276,14 @@ namespace MemoryCleaner.Pages
                 residualMode.IsEnabled = true;
                 if (residualTask.ThreadState != ThreadState.Unstarted)
                     residualTask.Join(1);
-                residualTask = new Thread(ResidualTaskTimer);
+                residualTask = new(ResidualTaskTimer);
             }
             else if (Frame_ModeSwitch.Content is TimeModePage)
             {
                 timeMode.TextBox_IntervalTime.IsEnabled = true;
                 if (timeTask.ThreadState != ThreadState.Unstarted)
                     timeTask.Join(1);
-                timeTask = new Thread(TimeTaskTimer);
+                timeTask = new(TimeTaskTimer);
                 Dispatcher.Invoke(() =>
                 {
                     timeMode.Label_TimeLeft.Content = "00:00:00";

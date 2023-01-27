@@ -61,7 +61,7 @@ namespace MemoryCleaner.Langs.Pages.TimeModePage {
         }
         
         /// <summary>
-        ///   查找类似 IntervalTime 的本地化字符串。
+        ///   查找类似 Interval travel time 的本地化字符串。
         /// </summary>
         public static string IntervalTime {
             get {
@@ -70,7 +70,7 @@ namespace MemoryCleaner.Langs.Pages.TimeModePage {
         }
         
         /// <summary>
-        ///   查找类似 Min 的本地化字符串。
+        ///   查找类似 min 的本地化字符串。
         /// </summary>
         public static string Min {
             get {
@@ -79,7 +79,7 @@ namespace MemoryCleaner.Langs.Pages.TimeModePage {
         }
         
         /// <summary>
-        ///   查找类似 NextExecution 的本地化字符串。
+        ///   查找类似 Time remaining for the next run 的本地化字符串。
         /// </summary>
         public static string NextRun {
             get {

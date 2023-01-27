@@ -118,55 +118,55 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AutoMinimizedAndStart" xml:space="preserve">
-    <value>AutoMinimizedAndStart</value>
+    <value>Auto minimize and start</value>
   </data>
   <data name="EmptyModifiedPageList" xml:space="preserve">
-    <value>EmptyModifiedPageList</value>
+    <value>Empty odified Page List</value>
   </data>
   <data name="EmptyModifiedPageListTip" xml:space="preserve">
     <value>EmptyModifiedPageListTip</value>
   </data>
   <data name="EmptyPrioity0StandbyList" xml:space="preserve">
-    <value>EmptyPrioity0StandbyList</value>
+    <value>Empty Prioity 0 Standby List</value>
   </data>
   <data name="EmptyPrioity0StandbyListTip" xml:space="preserve">
     <value>EmptyPrioity0StandbyListTip</value>
   </data>
   <data name="EmptyStandbyList" xml:space="preserve">
-    <value>EmptyStandbyList</value>
+    <value>Empty Standby List</value>
   </data>
   <data name="EmptyStandbyListTip" xml:space="preserve">
     <value>EmptyStandbyListTip</value>
   </data>
   <data name="EmptySystemWorkingSets" xml:space="preserve">
-    <value>EmptySystemWorkingSets</value>
+    <value>Empty System Working Sets</value>
   </data>
   <data name="EmptySystemWorkingSetsTip" xml:space="preserve">
     <value>EmptySystemWorkingSetsTip</value>
   </data>
   <data name="EmptyWorkingSets" xml:space="preserve">
-    <value>EmptyWorkingSets</value>
+    <value>Empty Working Sets</value>
   </data>
   <data name="EmptyWorkingSetsTip" xml:space="preserve">
     <value>EmptyWorkingSetsTip</value>
   </data>
   <data name="ExecuteNow" xml:space="preserve">
-    <value>ExecuteNow</value>
+    <value>Execute Now</value>
   </data>
   <data name="FreeMemory" xml:space="preserve">
-    <value>FreeMemory</value>
+    <value>FreeMemory:</value>
   </data>
   <data name="LanuchOnUserLogon" xml:space="preserve">
-    <value>LanuchOnUserLogon</value>
+    <value>Lanuch on user logon</value>
   </data>
   <data name="MemoryMetrics" xml:space="preserve">
     <value>MemoryMetrics</value>
   </data>
   <data name="ModeSwitch" xml:space="preserve">
-    <value>ModeSwitch</value>
+    <value>Switch</value>
   </data>
   <data name="NoCurrentTasks" xml:space="preserve">
-    <value>NoCurrentTasks</value>
+    <value>No current tasks</value>
   </data>
   <data name="ProgramTasks" xml:space="preserve">
     <value>ProgramTasks</value>
@@ -175,7 +175,7 @@
     <value>RammapMode</value>
   </data>
   <data name="ResidualMode" xml:space="preserve">
-    <value>ResidualMode</value>
+    <value>Residual Mode</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>Start</value>
@@ -190,9 +190,9 @@
     <value>TimeMode</value>
   </data>
   <data name="TotalSystemMemory" xml:space="preserve">
-    <value>TotalSystemMemory</value>
+    <value>Total system memory:</value>
   </data>
   <data name="UsedMemory" xml:space="preserve">
-    <value>UsedMemory</value>
+    <value>Used memory:</value>
   </data>
 </root>

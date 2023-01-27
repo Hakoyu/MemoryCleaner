@@ -61,7 +61,7 @@ namespace MemoryCleaner.Langs.Pages.MainPage {
         }
         
         /// <summary>
-        ///   查找类似 AutoMinimizedAndStart 的本地化字符串。
+        ///   查找类似 Auto minimize and start 的本地化字符串。
         /// </summary>
         public static string AutoMinimizedAndStart {
             get {
@@ -70,7 +70,7 @@ namespace MemoryCleaner.Langs.Pages.MainPage {
         }
         
         /// <summary>
-        ///   查找类似 EmptyModifiedPageList 的本地化字符串。
+        ///   查找类似 Empty odified Page List 的本地化字符串。
         /// </summary>
         public static string EmptyModifiedPageList {
             get {
@@ -88,7 +88,7 @@ namespace MemoryCleaner.Langs.Pages.MainPage {
         }
         
         /// <summary>
-        ///   查找类似 EmptyPrioity0StandbyList 的本地化字符串。
+        ///   查找类似 Empty Prioity 0 Standby List 的本地化字符串。
         /// </summary>
         public static string EmptyPrioity0StandbyList {
             get {
@@ -106,7 +106,7 @@ namespace MemoryCleaner.Langs.Pages.MainPage {
         }
         
         /// <summary>
-        ///   查找类似 EmptyStandbyList 的本地化字符串。
+        ///   查找类似 Empty Standby List 的本地化字符串。
         /// </summary>
         public static string EmptyStandbyList {
             get {
@@ -124,7 +124,7 @@ namespace MemoryCleaner.Langs.Pages.MainPage {
         }
         
         /// <summary>
-        ///   查找类似 EmptySystemWorkingSets 的本地化字符串。
+        ///   查找类似 Empty System Working Sets 的本地化字符串。
         /// </summary>
         public static string EmptySystemWorkingSets {
             get {
@@ -142,7 +142,7 @@ namespace MemoryCleaner.Langs.Pages.MainPage {
         }
         
         /// <summary>
-        ///   查找类似 EmptyWorkingSets 的本地化字符串。
+        ///   查找类似 Empty Working Sets 的本地化字符串。
         /// </summary>
         public static string EmptyWorkingSets {
             get {
@@ -160,7 +160,7 @@ namespace MemoryCleaner.Langs.Pages.MainPage {
         }
         
         /// <summary>
-        ///   查找类似 ExecuteNow 的本地化字符串。
+        ///   查找类似 Execute Now 的本地化字符串。
         /// </summary>
         public static string ExecuteNow {
             get {
@@ -169,7 +169,7 @@ namespace MemoryCleaner.Langs.Pages.MainPage {
         }
         
         /// <summary>
-        ///   查找类似 FreeMemory 的本地化字符串。
+        ///   查找类似 FreeMemory: 的本地化字符串。
         /// </summary>
         public static string FreeMemory {
             get {
@@ -178,7 +178,7 @@ namespace MemoryCleaner.Langs.Pages.MainPage {
         }
         
         /// <summary>
-        ///   查找类似 LanuchOnUserLogon 的本地化字符串。
+        ///   查找类似 Lanuch on user logon 的本地化字符串。
         /// </summary>
         public static string LanuchOnUserLogon {
             get {
@@ -196,7 +196,7 @@ namespace MemoryCleaner.Langs.Pages.MainPage {
         }
         
         /// <summary>
-        ///   查找类似 ModeSwitch 的本地化字符串。
+        ///   查找类似 Switch 的本地化字符串。
         /// </summary>
         public static string ModeSwitch {
             get {
@@ -205,7 +205,7 @@ namespace MemoryCleaner.Langs.Pages.MainPage {
         }
         
         /// <summary>
-        ///   查找类似 NoCurrentTasks 的本地化字符串。
+        ///   查找类似 No current tasks 的本地化字符串。
         /// </summary>
         public static string NoCurrentTasks {
             get {
@@ -232,7 +232,7 @@ namespace MemoryCleaner.Langs.Pages.MainPage {
         }
         
         /// <summary>
-        ///   查找类似 ResidualMode 的本地化字符串。
+        ///   查找类似 Residual Mode 的本地化字符串。
         /// </summary>
         public static string ResidualMode {
             get {
@@ -277,7 +277,7 @@ namespace MemoryCleaner.Langs.Pages.MainPage {
         }
         
         /// <summary>
-        ///   查找类似 TotalSystemMemory 的本地化字符串。
+        ///   查找类似 Total system memory: 的本地化字符串。
         /// </summary>
         public static string TotalSystemMemory {
             get {
@@ -286,7 +286,7 @@ namespace MemoryCleaner.Langs.Pages.MainPage {
         }
         
         /// <summary>
-        ///   查找类似 UsedMemory 的本地化字符串。
+        ///   查找类似 Used memory: 的本地化字符串。
         /// </summary>
         public static string UsedMemory {
             get {

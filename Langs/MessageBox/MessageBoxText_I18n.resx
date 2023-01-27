@@ -118,12 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ConfigLoadingError" xml:space="preserve">
-    <value>ConfigLoadingError</value>
+    <value>Config loading error
+Will restore default config</value>
   </data>
   <data name="ConfirmExit" xml:space="preserve">
-    <value>ConfirmExit</value>
+    <value>Confirm exit?</value>
   </data>
   <data name="SwitchLanguage" xml:space="preserve">
-    <value>SwitchLanguage</value>
+    <value>Confirm switch to</value>
   </data>
 </root>

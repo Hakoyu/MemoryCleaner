@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Resources\recycling.ico</ApplicationIcon>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;x64</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
+    <PackageReference Include="Panuon.WPF.UI" Version="1.1.6.5" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,23 +1,88 @@
-﻿<Window x:Name="window" x:Class="MemoryCleaner.Windows.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MemoryCleaner"
-        xmlns:I18n="clr-namespace:MemoryCleaner.Langs.Windows.MainWindow"
-        mc:Ignorable="d"
-        Title="MemoryCleaner" Height="450" Width="700" ResizeMode="CanMinimize" WindowStyle="None" WindowStartupLocation="CenterScreen" Background="#33FFFFFF">
-    <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness="-1"/>
-    </WindowChrome.WindowChrome>
-    <Grid WindowChrome.IsHitTestVisibleInChrome="True">
-        <Grid x:Name="Grid_TitleBar" VerticalAlignment="Top" Height="30" MouseLeftButtonDown="Grid_TitleBar_MouseLeftButtonDown" Background="#4CFFFFFF">
-            <Image x:Name="Image_Title" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="20" Source="/Resources/recycling.ico" Margin="5,5,0,0"/>
-            <Label x:Name="Label_Title" Content="{x:Static I18n:MainWindow_I18n.MemoryCleaner}" HorizontalAlignment="Stretch" Margin="30,0,90,0" VerticalAlignment="Stretch" Padding="0,0,0,0" VerticalContentAlignment="Center"/>
-            <Button x:Name="Button_TitleMin" Content="➖" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" Width="30" Height="30" BorderBrush="{x:Null}" FontSize="16" Margin="0,0,60,0" Click="Button_TitleMin_Click"/>
-            <Button x:Name="Button_TitleMax" Content="🔲" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" Width="30" Height="30" BorderBrush="{x:Null}" FontSize="16" Margin="0,0,30,0" Click="Button_TitleMax_Click" IsEnabled="False"/>
-            <Button x:Name="Button_TitleClose" Content="❌" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" Width="30" Height="30" BorderBrush="{x:Null}" FontSize="16" Click="Button_TitleClose_Click"/>
-        </Grid>
-        <Frame x:Name="Frame_MainWindows" Content="" Margin="0,30,0,0" NavigationUIVisibility="Hidden"/>
+﻿<Window
+  x:Class="MemoryCleaner.Windows.MainWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:I18n="clr-namespace:MemoryCleaner.Langs.Windows.MainWindow"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:MemoryCleaner"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  x:Name="window"
+  Title="MemoryCleaner"
+  Width="700"
+  Height="450"
+  Background="#33FFFFFF"
+  ResizeMode="CanMinimize"
+  WindowStartupLocation="CenterScreen"
+  WindowStyle="None"
+  mc:Ignorable="d">
+  <WindowChrome.WindowChrome>
+    <WindowChrome GlassFrameThickness="-1" />
+  </WindowChrome.WindowChrome>
+  <Grid WindowChrome.IsHitTestVisibleInChrome="True">
+    <Grid
+      x:Name="Grid_TitleBar"
+      Height="30"
+      VerticalAlignment="Top"
+      Background="#4CFFFFFF"
+      MouseLeftButtonDown="Grid_TitleBar_MouseLeftButtonDown">
+      <Image
+        x:Name="Image_Title"
+        Width="20"
+        Height="20"
+        Margin="5,5,0,0"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top"
+        Source="/Resources/recycling.ico" />
+      <Label
+        x:Name="Label_Title"
+        Margin="30,0,90,0"
+        Padding="0,0,0,0"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        VerticalContentAlignment="Center"
+        Background="{x:Null}"
+        Content="{x:Static I18n:MainWindow_I18n.MemoryCleaner}" />
+      <Button
+        x:Name="Button_TitleMin"
+        Width="30"
+        Height="30"
+        Margin="0,0,60,0"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Top"
+        Background="{x:Null}"
+        BorderBrush="{x:Null}"
+        Click="Button_TitleMin_Click"
+        Content="➖"
+        FontSize="16" />
+      <Button
+        x:Name="Button_TitleMax"
+        Width="30"
+        Height="30"
+        Margin="0,0,30,0"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Top"
+        Background="{x:Null}"
+        BorderBrush="{x:Null}"
+        Click="Button_TitleMax_Click"
+        Content="🔲"
+        FontSize="16"
+        IsEnabled="False" />
+      <Button
+        x:Name="Button_TitleClose"
+        Width="30"
+        Height="30"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Top"
+        Background="{x:Null}"
+        BorderBrush="{x:Null}"
+        Click="Button_TitleClose_Click"
+        Content="❌"
+        FontSize="16" />
     </Grid>
+    <Frame
+      x:Name="Frame_MainFrame"
+      Margin="0,30,0,0"
+      Content=""
+      NavigationUIVisibility="Hidden" />
+  </Grid>
 </Window>

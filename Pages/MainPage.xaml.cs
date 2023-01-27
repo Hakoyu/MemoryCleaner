@@ -26,13 +26,14 @@ using System.Globalization;
 using MemoryCleaner.Langs.MessageBox;
 using MemoryCleaner.Lib;
 using MemoryCleaner.Langs.Pages.MainPage;
+using MemoryCleaner.Windows;
 
 namespace MemoryCleaner.Pages
 {
     /// <summary>
     /// MainPage.xaml 的交互逻辑
     /// </summary>
-    public partial class MainPage : Page
+    public partial class MainPage : Page, IDisposable
     {
         public bool autoMinimized = false;
         Management management = new();
@@ -55,6 +56,19 @@ namespace MemoryCleaner.Pages
         };
         Dictionary<string, ComboBoxItem> i18nItems = new();
         bool isFirst = true;
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Close();
+            }
+        }
         public MainPage()
         {
             BeforeInitialisation();
@@ -124,8 +138,8 @@ namespace MemoryCleaner.Pages
         }
         private void Button_Info_Click(object sender, RoutedEventArgs e)
         {
-            Windows.InfoWindow infoWindow = new();
-            infoWindow.ShowDialog();
+            //Windows.InfoWindow infoWindow = new();
+            //infoWindow.ShowDialog();
         }
 
         private void ComboBox_I18n_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -135,20 +149,23 @@ namespace MemoryCleaner.Pages
                 isFirst = false;
                 return;
             }
-            SetBlurEffect();
+            //SetBlurEffect();
             ComboBoxItem oldItem = i18nItems[Thread.CurrentThread.CurrentUICulture.Name];
             ComboBoxItem item = (ComboBoxItem)ComboBox_I18n.SelectedItem;
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(item.ToolTip.ToString()!);
-            if (MessageBox.Show($"{MessageBoxText_I18n.SwitchLanguage} {item.Content} ?", MessageBoxCaption_I18n.Warn, MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+            if (MessageBox.Show(Application.Current.MainWindow, $"{MessageBoxText_I18n.SwitchLanguage} {item.Content} ?", MessageBoxCaption_I18n.Warn, MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
             {
                 Close();
-                ChangeI18n();
-                return;
+                //ChangeI18n();
+                ((MainWindow)Application.Current.MainWindow).ChangeI18n();
             }
-            isFirst = true;
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(oldItem.ToolTip.ToString()!);
-            ComboBox_I18n.SelectedItem = oldItem;
-            RemoveBlurEffect();
+            else
+            {
+                isFirst = true;
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(oldItem.ToolTip.ToString()!);
+                ComboBox_I18n.SelectedItem = oldItem;
+            }
+            //RemoveBlurEffect();
         }
         private void Button_ModeSwitch_Click(object sender, RoutedEventArgs e)
         {

@@ -61,7 +61,8 @@ namespace MemoryCleaner.Langs.MessageBox {
         }
         
         /// <summary>
-        ///   查找类似 ConfigLoadingError 的本地化字符串。
+        ///   查找类似 Config loading error
+        ///Will restore default config 的本地化字符串。
         /// </summary>
         internal static string ConfigLoadingError {
             get {
@@ -70,7 +71,7 @@ namespace MemoryCleaner.Langs.MessageBox {
         }
         
         /// <summary>
-        ///   查找类似 ConfirmExit 的本地化字符串。
+        ///   查找类似 Confirm exit? 的本地化字符串。
         /// </summary>
         internal static string ConfirmExit {
             get {
@@ -79,7 +80,7 @@ namespace MemoryCleaner.Langs.MessageBox {
         }
         
         /// <summary>
-        ///   查找类似 SwitchLanguage 的本地化字符串。
+        ///   查找类似 Confirm switch to 的本地化字符串。
         /// </summary>
         internal static string SwitchLanguage {
             get {

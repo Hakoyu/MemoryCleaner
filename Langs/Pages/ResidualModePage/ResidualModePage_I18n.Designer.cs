@@ -61,7 +61,7 @@ namespace MemoryCleaner.Langs.Pages.ResidualModePage {
         }
         
         /// <summary>
-        ///   查找类似 FreeMemoryLower 的本地化字符串。
+        ///   查找类似 Free memory lower than: 的本地化字符串。
         /// </summary>
         public static string FreeMemoryLower {
             get {
@@ -70,7 +70,7 @@ namespace MemoryCleaner.Langs.Pages.ResidualModePage {
         }
         
         /// <summary>
-        ///   查找类似 MinimumInterval 的本地化字符串。
+        ///   查找类似 Minimum operating interval: 的本地化字符串。
         /// </summary>
         public static string MinimumInterval {
             get {
@@ -79,7 +79,7 @@ namespace MemoryCleaner.Langs.Pages.ResidualModePage {
         }
         
         /// <summary>
-        ///   查找类似 UsedMemoryMore 的本地化字符串。
+        ///   查找类似 Used memory more than: 的本地化字符串。
         /// </summary>
         public static string UsedMemoryMore {
             get {

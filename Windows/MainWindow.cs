@@ -15,15 +15,19 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Threading;
 using System.IO;
-using System.Drawing;
 
 namespace MemoryCleaner.Windows
 {
     public partial class MainWindow
     {
+        readonly Dictionary<string, ResourceDictionary> styleDic = new()
+        {
+            { "WhiteStyle",new(){ Source = new Uri("/ThemeResources/WhiteStyle.xaml", UriKind.Relative)} },
+            { "BlackStyle",new(){ Source = new Uri("/ThemeResources/BlackStyle.xaml", UriKind.Relative)} },
+        };
         void SetI18n()
         {
-            if (Global.CreateConfigFile())
+            if (!Global.CreateConfigFile())
             {
                 SaveI18n2Config();
             }
@@ -31,7 +35,7 @@ namespace MemoryCleaner.Windows
             {
                 try
                 {
-                    using TomlTable toml = TOML.Parse(Global.configPath);
+                    TomlTable toml = TOML.Parse(Global.configPath);
                     Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(toml["Extras"]["Lang"].AsString);
                 }
                 catch
@@ -42,19 +46,21 @@ namespace MemoryCleaner.Windows
         }
         void SetMainPage()
         {
+            //mainPage?.Close();
+            mainPage = null!;
             mainPage = new();
-            mainPage.ChangeI18n += ChangeI18n;
-            mainPage.ConfigLoadError += ConfigLoadError;
-            mainPage.SetBlurEffect += SetBlurEffect;
-            mainPage.RemoveBlurEffect += RemoveBlurEffect;
-            GC.Collect();
+            //mainPage.ChangeI18n += ChangeI18n;
+            //mainPage.ConfigLoadError += ConfigLoadError;
+            //mainPage.SetBlurEffect += SetBlurEffect;
+            //mainPage.RemoveBlurEffect += RemoveBlurEffect;
         }
-        void ChangeI18n()
+        public void ChangeI18n()
         {
             Label_Title.Content = MainWindow_I18n.MemoryCleaner;
             SetMainPage();
-            Frame_MainWindows.Content = null!;
-            Frame_MainWindows.Content = mainPage;
+            GC.Collect();
+            Frame_MainFrame.Content = null!;
+            Frame_MainFrame.Content = mainPage;
         }
         void ConfigLoadError()
         {
@@ -67,7 +73,7 @@ namespace MemoryCleaner.Windows
         }
         static void SaveI18n2Config()
         {
-            using TomlTable toml = TOML.Parse(Global.configPath);
+            TomlTable toml = TOML.Parse(Global.configPath);
             toml["Extras"]["Lang"] = Thread.CurrentThread.CurrentUICulture.Name;
             toml.SaveTo(Global.configPath);
         }
@@ -81,7 +87,7 @@ namespace MemoryCleaner.Windows
         }
         void DisplayInitialisation()
         {
-            Frame_MainWindows.Content = mainPage;
+            Frame_MainFrame.Content = mainPage;
             if (mainPage.autoMinimized == true)
                 Button_TitleMin_Click(null!, null!);
         }
@@ -118,6 +124,7 @@ namespace MemoryCleaner.Windows
                 Close();
             }
             Effect = null;
+            GC.Collect();
         }
         private void SetBlurEffect()
         {

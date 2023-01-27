@@ -70,7 +70,7 @@ namespace MemoryCleaner.Langs.NotifyIcon {
         }
         
         /// <summary>
-        ///   查找类似 Run 的本地化字符串。
+        ///   查找类似 Run cleanup 的本地化字符串。
         /// </summary>
         internal static string Run {
             get {
@@ -79,7 +79,7 @@ namespace MemoryCleaner.Langs.NotifyIcon {
         }
         
         /// <summary>
-        ///   查找类似 Show 的本地化字符串。
+        ///   查找类似 Show window 的本地化字符串。
         /// </summary>
         internal static string Show {
             get {

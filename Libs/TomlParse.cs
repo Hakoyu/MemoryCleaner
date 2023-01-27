@@ -194,7 +194,7 @@ namespace HKW.TomlParse
         public bool MultilineTrimFirstLine { get; set; }
         public bool PreferLiteral { get; set; }
 
-        public string Value { get; set; } = null!;
+        public string Value { get; set; } = "";
 
         public override string ToString() => Value;
 
@@ -338,13 +338,14 @@ namespace HKW.TomlParse
         public new IEnumerator<TomlNode> GetEnumerator() => values.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        private List<TomlNode> values = null!;
+
+        private List<TomlNode> values = new();
 
         public override bool HasValue { get; } = true;
         public override bool IsTomlArray { get; } = true;
         public bool IsMultiline { get; set; }
         public bool IsTableArray { get; set; }
-        public List<TomlNode> RawArray => values ??= new List<TomlNode>();
+        public List<TomlNode> RawArray => values;
 
         public override TomlNode this[int index]
         {
@@ -448,62 +449,19 @@ namespace HKW.TomlParse
         }
     }
 
-    public class TomlTable : TomlNode, IDisposable, IEnumerable, IEnumerable<KeyValuePair<string, TomlNode>>
+    public class TomlTable : TomlNode, IEnumerable, IEnumerable<KeyValuePair<string, TomlNode>>
     {
-        private bool disposed;
-
-        /// <summary>
-        /// 为了防止忘记显式的调用Dispose方法
-        /// </summary>
-        ~TomlTable()
-        {
-            Dispose(false);
-        }
-
-        /// <summary>执行与释放或重置非托管资源关联的应用程序定义的任务。</summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// 非必需的，只是为了更符合其他语言的规范，如C++、java
-        /// </summary>
-        public void Close()
-        {
-            Dispose();
-        }
-
-        /// <summary>
-        /// 非密封类可重写的Dispose方法，方便子类继承时可重写
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposed)
-                return;
-            //清理托管资源
-            if (disposing)
-            {
-            }
-            //清理非托管资源
-            children?.Clear();
-            children = null!;
-            disposed = true;
-        }
-
         public new IEnumerator<KeyValuePair<string, TomlNode>> GetEnumerator() => children.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        private Dictionary<string, TomlNode> children = null!;
+        private Dictionary<string, TomlNode> children = new();
         internal bool isImplicit;
 
         public override bool HasValue { get; } = false;
         public override bool IsTomlTable { get; } = true;
         public bool IsInline { get; set; }
-        public Dictionary<string, TomlNode> RawTable => children ??= new();
+        public Dictionary<string, TomlNode> RawTable => children;
 
         public override TomlNode this[string key]
         {
@@ -1661,7 +1619,7 @@ namespace HKW.TomlParse
                 }
 
                 first = false;
-                //TODO: Reuse ProcessQuotedValueCharacter
+                //?TODO: Reuse ProcessQuotedValueCharacter
                 // Skip the current character if it is going to be escaped later
                 if (escaped)
                 {
@@ -1898,11 +1856,18 @@ namespace HKW.TomlParse
     {
         public static bool ForceASCII { get; set; } = false;
 
-        // public static TomlTable Parse(TextReader reader)
-        // {
-        //     using var parser = new TOMLParser(reader) { ForceASCII = ForceASCII };
-        //     return parser.Parse();
-        // }
+        public static TomlTable Parse(TextReader reader)
+        {
+            try
+            {
+                using var parser = new TOMLParser(reader) { ForceASCII = ForceASCII };
+                return parser.Parse();
+            }
+            catch (TomlParseException ex)
+            {
+                throw ex;
+            }
+        }
         public static TomlTable Parse(string path)
         {
             try
@@ -1911,9 +1876,9 @@ namespace HKW.TomlParse
                 using var parser = new TOMLParser(reader) { ForceASCII = ForceASCII };
                 return parser.Parse();
             }
-            catch
+            catch (TomlParseException ex)
             {
-                throw;
+                throw ex;
             }
         }
     }
